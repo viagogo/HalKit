@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalKit", "src\HalKit\HalKit.csproj", "{F1F25B20-C342-4F94-8029-11586B75D1F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalKit.Tests", "tests\HalKit.Tests\HalKit.Tests.csproj", "{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1F25B20-C342-4F94-8029-11586B75D1F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1F25B20-C342-4F94-8029-11586B75D1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1F25B20-C342-4F94-8029-11586B75D1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1F25B20-C342-4F94-8029-11586B75D1F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
