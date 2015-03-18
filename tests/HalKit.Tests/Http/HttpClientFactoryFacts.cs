@@ -1,12 +1,11 @@
-﻿using System;
+﻿using System.Net;
 using System.Net.Http;
 using Moq;
-using System.Net;
 using Xunit;
 
-namespace HalKit.Tests
+namespace HalKit.Tests.Http
 {
-    public class HttpClientFactoryTests
+    public class HttpClientFactoryFacts
     {
         private static HttpClientFactory CreateFactory(HttpClientHandler clientHndl = null)
         {

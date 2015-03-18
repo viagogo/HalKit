@@ -51,7 +51,8 @@ Target "UnitTests" (fun _ ->
     !! (buildDir + @"\HalKit*.Tests.dll")
     |> xUnit2 (fun p ->
         {p with
-            OutputDir = testResultsDir}
+            OutputDir = testResultsDir
+            HtmlOutput = true}
     )
 )
 
