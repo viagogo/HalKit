@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Http\ApiResponseFactoryFacts.cs" />
     <Compile Include="Http\HttpClientFactoryFacts.cs" />
     <Compile Include="Fakes\FakeDelegatingHandler.cs" />
   </ItemGroup>
