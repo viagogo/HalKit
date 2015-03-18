@@ -1,3 +1,7 @@
+# All build tools except nuget stuff
+[Tt]ools/*
+![Tt]ools/nuget/
+
 # User-specific files
 *.suo
 *.user
@@ -16,8 +20,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Aa]rtifacts/
-[Tt]ools/FAKE.core
-[Tt]ools/xunit.runner.console
 
 # Roslyn cache directories
 *.ide/

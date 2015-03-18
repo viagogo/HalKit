@@ -13,7 +13,7 @@ namespace HalKit.Tests.Http
                 clientHndl ?? new Mock<HttpClientHandler>(MockBehavior.Loose).Object);
         }
 
-        public class Constructor
+        public class TheConstructor
         {
             [Fact]
             public void ShouldSetTheClientHandlerToSupportAutomaticGzipAndDeflateCompression_WhenItSupportsAutoDecompression()
