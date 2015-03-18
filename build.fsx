@@ -1,8 +1,9 @@
-#r @"packages/FAKE/tools/FakeLib.dll"
+#r @"tools/FAKE.Core/tools/FakeLib.dll"
 
 open System
 open Fake
 open Fake.AssemblyInfoFile
+open Fake.XUnit2Helper
 
 // Project information used to generate AssemblyInfo and .nuspec
 let projectName = "HalKit"
@@ -46,8 +47,17 @@ Target "BuildApp" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
+Target "UnitTests" (fun _ ->
+    !! (buildDir + @"\HalKit*.Tests.dll")
+    |> xUnit2 (fun p ->
+        {p with
+            OutputDir = testResultsDir}
+    )
+)
+
 "Clean"
     ==> "AssemblyInfo"
     ==> "BuildApp"
+    ==> "UnitTests"
 
 RunTargetOrDefault "BuildApp"

@@ -16,11 +16,13 @@ if test "$OS" = "Windows_NT"
 then
   # use .Net
   echo Installing build tools...
-  tools/nuget/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion
-  packages/FAKE/tools/FAKE.exe build.fsx $@
+  tools/nuget/NuGet.exe install "FAKE.Core" -OutputDirectory "tools" -ExcludeVersion -Version "3.23.0"
+  tools/nuget/NuGet.exe install "xunit.runner.console" -OutputDirectory "tools" -ExcludeVersion -Version "2.0.0"
+  tools/FAKE.Core/tools/FAKE.exe build.fsx $@
 else
   # use mono
   echo Installing build tools...
-  mono tools/nuget/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion
-  mono packages/FAKE/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx
+  mono tools/nuget/NuGet.exe install "FAKE.Core" -OutputDirectory "tools" -ExcludeVersion -Version "3.23.0"
+  mono tools/nuget/NuGet.exe install "xunit.runner.console" -OutputDirectory "tools" -ExcludeVersion -Version "2.0.0"
+  mono tools/FAKE.Core/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx
 fi
