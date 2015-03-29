@@ -82,7 +82,7 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestToUriReturnedByLinkResolver()
             {
-                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection(
+                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<RootResource>(
                     client => client.GetRootAsync(
                                 null,
                                 new Dictionary<string, IEnumerable<string>>{{"Foo", new[] {"Bar"}}}));
@@ -91,7 +91,7 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestWithHttpGetMethod()
             {
-                await VerifyHttpMethodIsPassedToHttpConnection(
+                await VerifyHttpMethodIsPassedToHttpConnection<RootResource>(
                     HttpMethod.Get,
                     client => client.GetRootAsync(null, null));
             }
@@ -99,7 +99,7 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestWithNullBody()
             {
-                await VerifyBodyIsPassedToHttpConnection(
+                await VerifyBodyIsPassedToHttpConnection<RootResource>(
                     null,
                     client => client.GetRootAsync(null, null));
             }
@@ -107,14 +107,14 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestWithAcceptHeaderSetToHalJson()
             {
-                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection(
+                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<RootResource>(
                     client => client.GetRootAsync(null, null));
             }
 
             [Fact]
             public async void ShouldSendRequestWithGivenHeaderSetToHalJson()
             {
-                await VerifyGivenHeaderIsPassedToHttpConnection(
+                await VerifyGivenHeaderIsPassedToHttpConnection<RootResource>(
                     (client, headers) => client.GetRootAsync(null, headers));
             }
 
@@ -145,7 +145,7 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestToUriReturnedByLinkResolver()
             {
-                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection(
+                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<Resource>(
                     client => client.GetAsync<Resource>(
                                 new Link(),
                                 null,
@@ -155,7 +155,7 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestWithHttpGetMethod()
             {
-                await VerifyHttpMethodIsPassedToHttpConnection(
+                await VerifyHttpMethodIsPassedToHttpConnection<Resource>(
                     HttpMethod.Get,
                     client => client.GetAsync<Resource>(new Link(), null, null));
             }
@@ -163,7 +163,7 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestWithNullBody()
             {
-                await VerifyBodyIsPassedToHttpConnection(
+                await VerifyBodyIsPassedToHttpConnection<Resource>(
                     null,
                     client => client.GetAsync<Resource>(new Link(), null, null));
             }
@@ -171,22 +171,308 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestWithAcceptHeaderSetToHalJson()
             {
-                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection(
+                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<Resource>(
                     client => client.GetAsync<Resource>(new Link(), null, null));
             }
 
             [Fact]
             public async void ShouldSendRequestWithGivenHeaderSetToHalJson()
             {
-                await VerifyGivenHeaderIsPassedToHttpConnection(
+                await VerifyGivenHeaderIsPassedToHttpConnection<Resource>(
                     (client, headers) => client.GetAsync<Resource>(new Link(), null, headers));
             }
 
             [Fact]
-            public async void ShouldReturnRootResourceReturnedByHttpConnection()
+            public async void ShouldReturnBodyOfResponseReturnedByHttpConnection()
             {
                 await VerifyBodyOfApiResponseIsReturned(
                     client => client.GetAsync<Resource>(new Link(), null, null));
+            }
+        }
+
+        public class ThePostAsyncMethod
+        {
+            [Fact]
+            public async void ShouldPassGivenLinkToTheLinkResolver()
+            {
+                await VerifyGivenLinkIsPassedToLinkResolver(
+                    (client, link) => client.PostAsync<Resource>(link, new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldPassGivenParametersToLinkResolver()
+            {
+                await VerifyGivenParametersArePassedToLinkResolver(
+                    (client, parameters) => client.PostAsync<Resource>(new Link(), new object(), parameters, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestToUriReturnedByLinkResolver()
+            {
+                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<Resource>(
+                    client => client.PostAsync<Resource>(
+                                new Link(),
+                                new object(),
+                                null,
+                                new Dictionary<string, IEnumerable<string>> { { "Foo", new[] { "Bar" } } }));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithHttpPostMethod()
+            {
+                await VerifyHttpMethodIsPassedToHttpConnection<Resource>(
+                    HttpMethod.Post,
+                    client => client.PostAsync<Resource>(new Link(), new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithNullBody()
+            {
+                var expectedBody = new object();
+                await VerifyBodyIsPassedToHttpConnection<Resource>(
+                    expectedBody,
+                    client => client.PostAsync<Resource>(new Link(), expectedBody, null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithAcceptHeaderSetToHalJson()
+            {
+                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<Resource>(
+                    client => client.PostAsync<Resource>(new Link(), new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithGivenHeaderSetToHalJson()
+            {
+                await VerifyGivenHeaderIsPassedToHttpConnection<Resource>(
+                    (client, headers) => client.PostAsync<Resource>(
+                        new Link(),
+                        new object(),
+                        null,
+                        headers));
+            }
+
+            [Fact]
+            public async void ShouldReturnBodyOfResponseReturnedByHttpConnection()
+            {
+                await VerifyBodyOfApiResponseIsReturned(
+                    client => client.PostAsync<Resource>(new Link(), new object(), null, null));
+            }
+        }
+
+        public class ThePutAsyncMethod
+        {
+            [Fact]
+            public async void ShouldPassGivenLinkToTheLinkResolver()
+            {
+                await VerifyGivenLinkIsPassedToLinkResolver(
+                    (client, link) => client.PutAsync<Resource>(link, new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldPassGivenParametersToLinkResolver()
+            {
+                await VerifyGivenParametersArePassedToLinkResolver(
+                    (client, parameters) => client.PutAsync<Resource>(new Link(), new object(), parameters, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestToUriReturnedByLinkResolver()
+            {
+                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<Resource>(
+                    client => client.PutAsync<Resource>(
+                                new Link(),
+                                new object(),
+                                null,
+                                new Dictionary<string, IEnumerable<string>> { { "Foo", new[] { "Bar" } } }));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithHttpPutMethod()
+            {
+                await VerifyHttpMethodIsPassedToHttpConnection<Resource>(
+                    HttpMethod.Put,
+                    client => client.PutAsync<Resource>(new Link(), new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithNullBody()
+            {
+                var expectedBody = new object();
+                await VerifyBodyIsPassedToHttpConnection<Resource>(
+                    expectedBody,
+                    client => client.PutAsync<Resource>(new Link(), expectedBody, null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithAcceptHeaderSetToHalJson()
+            {
+                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<Resource>(
+                    client => client.PutAsync<Resource>(new Link(), new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithGivenHeaderSetToHalJson()
+            {
+                await VerifyGivenHeaderIsPassedToHttpConnection<Resource>(
+                    (client, headers) => client.PutAsync<Resource>(
+                        new Link(),
+                        new object(),
+                        null,
+                        headers));
+            }
+
+            [Fact]
+            public async void ShouldReturnBodyOfResponseReturnedByHttpConnection()
+            {
+                await VerifyBodyOfApiResponseIsReturned(
+                    client => client.PutAsync<Resource>(new Link(), new object(), null, null));
+            }
+        }
+
+        public class ThePatchAsyncMethod
+        {
+            [Fact]
+            public async void ShouldPassGivenLinkToTheLinkResolver()
+            {
+                await VerifyGivenLinkIsPassedToLinkResolver(
+                    (client, link) => client.PatchAsync<Resource>(link, new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldPassGivenParametersToLinkResolver()
+            {
+                await VerifyGivenParametersArePassedToLinkResolver(
+                    (client, parameters) => client.PatchAsync<Resource>(new Link(), new object(), parameters, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestToUriReturnedByLinkResolver()
+            {
+                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<Resource>(
+                    client => client.PatchAsync<Resource>(
+                                new Link(),
+                                new object(),
+                                null,
+                                new Dictionary<string, IEnumerable<string>> { { "Foo", new[] { "Bar" } } }));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithHttpPatchMethod()
+            {
+                await VerifyHttpMethodIsPassedToHttpConnection<Resource>(
+                    new HttpMethod("Patch"),
+                    client => client.PatchAsync<Resource>(new Link(), new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithNullBody()
+            {
+                var expectedBody = new object();
+                await VerifyBodyIsPassedToHttpConnection<Resource>(
+                    expectedBody,
+                    client => client.PatchAsync<Resource>(new Link(), expectedBody, null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithAcceptHeaderSetToHalJson()
+            {
+                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<Resource>(
+                    client => client.PatchAsync<Resource>(new Link(), new object(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithGivenHeaderSetToHalJson()
+            {
+                await VerifyGivenHeaderIsPassedToHttpConnection<Resource>(
+                    (client, headers) => client.PatchAsync<Resource>(
+                        new Link(),
+                        new object(),
+                        null,
+                        headers));
+            }
+
+            [Fact]
+            public async void ShouldReturnBodyOfResponseReturnedByHttpConnection()
+            {
+                await VerifyBodyOfApiResponseIsReturned(
+                    client => client.PatchAsync<Resource>(new Link(), new object(), null, null));
+            }
+        }
+
+        public class TheDeleteAsyncMethod
+        {
+            [Fact]
+            public async void ShouldPassGivenLinkToTheLinkResolver()
+            {
+                await VerifyGivenLinkIsPassedToLinkResolver(
+                    (client, link) => client.DeleteAsync(link, null, null));
+            }
+
+            [Fact]
+            public async void ShouldPassGivenParametersToLinkResolver()
+            {
+                await VerifyGivenParametersArePassedToLinkResolver(
+                    (client, parameters) => client.DeleteAsync(new Link(), parameters, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestToUriReturnedByLinkResolver()
+            {
+                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<object>(
+                    client => client.DeleteAsync(
+                                new Link(),
+                                null,
+                                new Dictionary<string, IEnumerable<string>> { { "Foo", new[] { "Bar" } } }));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithHttpDeleteMethod()
+            {
+                await VerifyHttpMethodIsPassedToHttpConnection<object>(
+                    HttpMethod.Delete,
+                    client => client.DeleteAsync(new Link(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithNullBody()
+            {
+                await VerifyBodyIsPassedToHttpConnection<object>(
+                    null,
+                    client => client.DeleteAsync(new Link(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithAcceptHeaderSetToHalJson()
+            {
+                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<object>(
+                    client => client.DeleteAsync(new Link(), null, null));
+            }
+
+            [Fact]
+            public async void ShouldSendRequestWithGivenHeaderSetToHalJson()
+            {
+                await VerifyGivenHeaderIsPassedToHttpConnection<object>(
+                    (client, headers) => client.DeleteAsync(new Link(), null, headers));
+            }
+
+            [Fact]
+            public async void ShouldReturnResponseReturnedByHttpConnection()
+            {
+                var expectedResponse = new ApiResponse<object>();
+                var mockConnection = new Mock<IHttpConnection>(MockBehavior.Loose);
+                mockConnection.Setup(c => c.SendRequestAsync<object>(
+                                            It.IsAny<Uri>(),
+                                            It.IsAny<HttpMethod>(),
+                                            It.IsAny<object>(),
+                                            It.IsAny<IDictionary<string, IEnumerable<string>>>()))
+                             .Returns(Task.FromResult<IApiResponse<object>>(expectedResponse))
+                             .Verifiable();
+                var client = CreateClient(conn: mockConnection.Object);
+
+                var actualResponse = await client.DeleteAsync(new Link(), null, null);
+
+                Assert.Same(expectedResponse, actualResponse);
             }
         }
 
@@ -205,8 +491,8 @@ namespace HalKit.Tests
             mockResolver.Verify();
         }
 
-        private static async Task VerifyGivenLinkIsPassedToLinkResolver<T>(
-            Func<HalClient, Link, Task<T>> clientAction)
+        private static async Task VerifyGivenLinkIsPassedToLinkResolver(
+            Func<HalClient, Link, Task> clientAction)
         {
             var expectedLink = new Link();
             var mockResolver = new Mock<ILinkResolver>(MockBehavior.Loose);
@@ -221,7 +507,7 @@ namespace HalKit.Tests
         }
 
         private static async Task VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<T>(
-            Func<HalClient, Task<T>> clientAction)
+            Func<HalClient, Task> clientAction)
         {
             var expectedUri = new Uri("http://host.com/path");
             var mockResolver = new Mock<ILinkResolver>(MockBehavior.Loose);
@@ -244,7 +530,7 @@ namespace HalKit.Tests
 
         private static async Task VerifyHttpMethodIsPassedToHttpConnection<T>(
             HttpMethod expectedMethod,
-            Func<HalClient, Task<T>> clientAction)
+            Func<HalClient, Task> clientAction)
         {
             var mockConnection = new Mock<IHttpConnection>(MockBehavior.Loose);
             mockConnection.Setup(c => c.SendRequestAsync<T>(
@@ -263,7 +549,7 @@ namespace HalKit.Tests
 
         private static async Task VerifyBodyIsPassedToHttpConnection<T>(
             object expectedBody,
-            Func<HalClient, Task<T>> clientAction)
+            Func<HalClient, Task> clientAction)
         {
             var mockConnection = new Mock<IHttpConnection>(MockBehavior.Loose);
             mockConnection.Setup(c => c.SendRequestAsync<T>(
@@ -281,7 +567,7 @@ namespace HalKit.Tests
         }
 
         private static async Task VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<T>(
-            Func<HalClient, Task<T>> clientAction)
+            Func<HalClient, Task> clientAction)
         {
             var expectedAcceptHeader = "application/hal+json";
             IDictionary<string, IEnumerable<string>> actualHeaders = null;
@@ -302,7 +588,7 @@ namespace HalKit.Tests
         }
 
         private static async Task VerifyGivenHeaderIsPassedToHttpConnection<T>(
-            Func<HalClient, IDictionary<string, IEnumerable<string>>, Task<T>> clientAction)
+            Func<HalClient, IDictionary<string, IEnumerable<string>>, Task> clientAction)
         {
             var expectedHeaderKey = "Custom Header";
             var expectedHeaderValue = new[] { "Custom Value 1", "Custom Value 2" };

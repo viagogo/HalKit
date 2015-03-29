@@ -77,6 +77,102 @@ namespace HalKit
                 headers);
         }
 
+        public Task<T> PostAsync<T>(Link link, object body)
+        {
+            return PostAsync<T>(link, body, new Dictionary<string, string>());
+        }
+
+        public Task<T> PostAsync<T>(Link link, object body, IDictionary<string, string> parameters)
+        {
+            return PostAsync<T>(link, body, parameters, new Dictionary<string, IEnumerable<string>>());
+        }
+
+        public Task<T> PostAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers)
+        {
+            return SendRequestAndGetBodyAsync<T>(
+                link,
+                HttpMethod.Post,
+                body,
+                parameters,
+                headers);
+        }
+
+        public Task<T> PutAsync<T>(Link link, object body)
+        {
+            return PutAsync<T>(link, body, new Dictionary<string, string>());
+        }
+
+        public Task<T> PutAsync<T>(Link link, object body, IDictionary<string, string> parameters)
+        {
+            return PutAsync<T>(link, body, parameters, new Dictionary<string, IEnumerable<string>>());
+        }
+
+        public Task<T> PutAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers)
+        {
+            return SendRequestAndGetBodyAsync<T>(
+                link,
+                HttpMethod.Put,
+                body,
+                parameters,
+                headers);
+        }
+
+        public Task<T> PatchAsync<T>(Link link, object body)
+        {
+            return PatchAsync<T>(link, body, new Dictionary<string, string>());
+        }
+
+        public Task<T> PatchAsync<T>(Link link, object body, IDictionary<string, string> parameters)
+        {
+            return PatchAsync<T>(link, body, parameters, new Dictionary<string, IEnumerable<string>>());
+        }
+
+        public Task<T> PatchAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers)
+        {
+            return SendRequestAndGetBodyAsync<T>(
+                link,
+                new HttpMethod("Patch"),
+                body,
+                parameters,
+                headers);
+        }
+
+        public Task<IApiResponse> DeleteAsync(Link link)
+        {
+            return DeleteAsync(link, new Dictionary<string, string>());
+        }
+
+        public Task<IApiResponse> DeleteAsync(Link link, IDictionary<string, string> parameters)
+        {
+            return DeleteAsync(link, parameters, new Dictionary<string, IEnumerable<string>>());
+        }
+
+        public async Task<IApiResponse> DeleteAsync(
+            Link link,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers)
+        {
+            var response = await SendRequestAsync<object>(
+                            link,
+                            HttpMethod.Delete,
+                            null,
+                            parameters,
+                            headers);
+            return response;
+        }
+
         public IHalKitConfiguration Configuration
         {
             get { return _configuration; }
@@ -94,6 +190,17 @@ namespace HalKit
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
         {
+            var response = await SendRequestAsync<T>(link, method, body, parameters, headers);
+            return response.BodyAsObject;
+        }
+
+        private async Task<IApiResponse<T>> SendRequestAsync<T>(
+            Link link,
+            HttpMethod method,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers)
+        {
             Requires.ArgumentNotNull(link, "link");
             Requires.ArgumentNotNull(method, "method");
 
@@ -103,12 +210,11 @@ namespace HalKit
                 headers.Add("Accept", new[] { HalJsonMediaType });
             }
 
-            var response = await _httpConnection.SendRequestAsync<T>(
-                                    _linkResolver.ResolveLink(link, parameters),
-                                    method,
-                                    body,
-                                    headers).ConfigureAwait(_configuration);
-            return response.BodyAsObject;
+            return await _httpConnection.SendRequestAsync<T>(
+                        _linkResolver.ResolveLink(link, parameters),
+                        method,
+                        body,
+                        headers).ConfigureAwait(_configuration);
         }
     }
 }
