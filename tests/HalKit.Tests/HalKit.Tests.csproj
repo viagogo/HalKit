@@ -63,9 +63,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Fakes\FakeApiResponseFactory.cs" />
+    <Compile Include="Fakes\FakeHttpClientFactory.cs" />
+    <Compile Include="Fakes\FakeHttpConnection.cs" />
     <Compile Include="Http\ApiResponseFactoryFacts.cs" />
     <Compile Include="Http\HttpClientFactoryFacts.cs" />
     <Compile Include="Fakes\FakeDelegatingHandler.cs" />
+    <Compile Include="Http\HttpConnectionFacts.cs" />
     <Compile Include="Json\DefaultJsonSerializerFacts.cs" />
     <Compile Include="Models\LinkCollectionFacts.cs" />
   </ItemGroup>

@@ -34,6 +34,8 @@
     <DocumentationFile>bin\Release\HalKit.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Http\HttpConnection.cs" />
+    <Compile Include="Http\IHttpConnection.cs" />
     <Compile Include="Models\CurieLink.cs" />
     <Compile Include="Exceptions\LinkNotFoundException.cs" />
     <Compile Include="Json\DefaultJsonSerializer.cs" />
