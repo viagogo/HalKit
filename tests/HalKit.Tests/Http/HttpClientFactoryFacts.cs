@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
+using HalKit.Http;
 using Moq;
 using Xunit;
 

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 
-namespace HalKit
+namespace HalKit.Http
 {
-    public class HttpClientFactory
+    public class HttpClientFactory : IHttpClientFactory
     {
         private readonly HttpClientHandler _clientHandler;
 

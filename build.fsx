@@ -84,6 +84,7 @@ Target "CreatePackage" (fun _ ->
     let tags = "HalKit HAL Hypermedia API REST"
     let dependencies = [
         ("Microsoft.Net.Http", GetPackageVersion "./packages/" "Microsoft.Net.Http")
+        ("Newtonsoft.Json", GetPackageVersion "./packages/" "Newtonsoft.Json")
     ]
     let libPortableDir = "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10/"
     let files = [
