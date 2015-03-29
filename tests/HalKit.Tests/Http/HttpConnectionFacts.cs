@@ -23,7 +23,7 @@ namespace HalKit.Tests.Http
         {
             return new HttpConnection(
                 handlers ?? new DelegatingHandler[] {},
-                config ?? HalKitConfiguration.Default,
+                config ?? new HalKitConfiguration(new Uri("http://foo.api.com")),
                 httpFact ?? new FakeHttpClientFactory(),
                 serializer ?? new Mock<IJsonSerializer>(MockBehavior.Loose).Object,
                 responseFactory ?? new FakeApiResponseFactory());
@@ -49,7 +49,7 @@ namespace HalKit.Tests.Http
             [Fact]
             public void ShouldReturnTheGivenConfiguration()
             {
-                var expectedConfig = new HalKitConfiguration();
+                var expectedConfig = new HalKitConfiguration(new Uri("http://foo.api.com"));
                 var connection = CreateConnection(config: expectedConfig);
 
                 var actualConfig = connection.Configuration;

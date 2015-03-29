@@ -1,5 +1,6 @@
 ﻿using HalKit.Json;
 using HalKit.Models;
+using HalKit.Resources;
 using Xunit;
 
 namespace HalKit.Tests.Json

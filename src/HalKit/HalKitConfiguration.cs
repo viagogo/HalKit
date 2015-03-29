@@ -1,9 +1,17 @@
-﻿namespace HalKit
+﻿using System;
+
+namespace HalKit
 {
     public class HalKitConfiguration : IHalKitConfiguration
     {
-        public static readonly HalKitConfiguration Default
-            = new HalKitConfiguration {CaptureSynchronizationContext = false};
+        public HalKitConfiguration(Uri rootEndpoint)
+        {
+            Requires.ArgumentNotNull(rootEndpoint, "rootEndpoint");
+
+            RootEndpoint = rootEndpoint;
+        }
+
+        public Uri RootEndpoint { get; set; }
 
         public bool CaptureSynchronizationContext { get; set; }
     }

@@ -34,8 +34,12 @@
     <DocumentationFile>bin\Release\HalKit.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HalClient.cs" />
+    <Compile Include="Services\ILinkResolver.cs" />
+    <Compile Include="Services\LinkResolver.cs" />
     <Compile Include="Http\HttpConnection.cs" />
     <Compile Include="Http\IHttpConnection.cs" />
+    <Compile Include="IHalClient.cs" />
     <Compile Include="Models\CurieLink.cs" />
     <Compile Include="Exceptions\LinkNotFoundException.cs" />
     <Compile Include="Json\DefaultJsonSerializer.cs" />
@@ -58,7 +62,8 @@
     </Compile>
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Requires.cs" />
-    <Compile Include="Models\Resource.cs" />
+    <Compile Include="Resources\Resource.cs" />
+    <Compile Include="Resources\RootResource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

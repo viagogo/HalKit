@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace HalKit.Tests.Http
         {
             return new ApiResponseFactory(
                 serializer ?? new Mock<IJsonSerializer>(MockBehavior.Loose).Object,
-                config ?? HalKitConfiguration.Default);
+                config ?? new HalKitConfiguration(new Uri("http://foo.api.com")));
         }
 
         private class Foo

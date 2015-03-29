@@ -13,7 +13,7 @@ namespace HalKit.Tests.Fakes
         public FakeHttpConnection(IApiResponse response = null, IHalKitConfiguration config = null)
         {
             _response = response;
-            Configuration = config ?? HalKitConfiguration.Default;
+            Configuration = config ?? new HalKitConfiguration(new Uri("http://foo.api.com"));
         }
 
         public Task<IApiResponse<T>> SendRequestAsync<T>(Uri uri, HttpMethod method, object body, IDictionary<string, IEnumerable<string>> headers)

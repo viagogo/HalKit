@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
+using HalKit.Models;
 
-namespace HalKit.Models
+namespace HalKit.Resources
 {
     [DataContract]
     public class Resource
