@@ -2,7 +2,7 @@ init:
   - git config --global core.autocrlf input
 
 build_script:
-  - cmd: build.cmd CreatePackage
+  - cmd: build.cmd CreatePackage Release
 
 test: off
 
