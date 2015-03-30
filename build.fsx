@@ -81,10 +81,11 @@ Target "SourceLink" (fun _ ->
 Target "CreatePackage" (fun _ ->
     CopyFiles buildDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
-    let tags = "HalKit HAL Hypermedia API REST"
+    let tags = "HAL Hypermedia API REST"
     let dependencies = [
         ("Microsoft.Net.Http", GetPackageVersion "./packages/" "Microsoft.Net.Http")
         ("Newtonsoft.Json", GetPackageVersion "./packages/" "Newtonsoft.Json")
+        ("Tavis.UriTemplates", GetPackageVersion "./packages/" "Tavis.UriTemplates")
     ]
     let libPortableDir = "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10/"
     let files = [
