@@ -117,7 +117,7 @@ Target "CreatePackages" DoNothing
     ==> "AssemblyInfo"
     ==> "BuildApp"
     ==> "UnitTests"
-    ==> "SourceLink"
+    // ==> "SourceLink" 
     ==> "CreatePackage"
 
 "CreatePackage"
