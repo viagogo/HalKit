@@ -15,6 +15,6 @@ namespace HalKit.Models
         public string Title { get; set; }
 
         [DataMember(Name = "templated")]
-        public bool Templated { get; set; }
+        public bool IsTemplated { get; set; }
     }
 }
