@@ -18,14 +18,17 @@ namespace HalKit
         private readonly ILinkResolver _linkResolver;
 
         public HalClient(IHalKitConfiguration configuration)
-            : this(new HttpConnection(new DelegatingHandler[] { }, configuration),
-                   configuration,
-                   new LinkResolver())
+            : this(configuration, new HttpConnection(new DelegatingHandler[] { }, configuration))
         {
         }
 
-        public HalClient(IHttpConnection httpConnection,
-                         IHalKitConfiguration configuration,
+        public HalClient(IHalKitConfiguration configuration, IHttpConnection httpConnection)
+            : this(configuration, httpConnection, new LinkResolver())
+        {
+        }
+
+        public HalClient(IHalKitConfiguration configuration,
+                         IHttpConnection httpConnection,
                          ILinkResolver linkResolver)
         {
             Requires.ArgumentNotNull(httpConnection, "httpConnection");

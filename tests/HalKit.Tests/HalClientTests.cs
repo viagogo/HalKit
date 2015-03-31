@@ -20,8 +20,8 @@ namespace HalKit.Tests
                                               ILinkResolver resolver = null)
         {
             return new HalClient(
-                conn ?? new FakeHttpConnection(),
                 config ?? new HalKitConfiguration(new Uri("http://foo.api.io")),
+                conn ?? new FakeHttpConnection(),
                 resolver ?? new Mock<ILinkResolver>(MockBehavior.Loose).Object);
         }
 
