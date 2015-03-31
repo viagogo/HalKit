@@ -1,10 +1,16 @@
+version: 1.0.{build}.{branch}
+
 init:
   - git config --global core.autocrlf input
 
 build_script:
-  - cmd: build.cmd CreatePackage Release
+  - cmd: build.cmd BuildApp
+  - cmd: build.cmd UnitTests
+  - cmd: build.cmd SourceLink
+  - cmd: build.cmd CreatePackage
 
 test: off
 
 artifacts:
   - path: artifacts\packages\*.nupkg
+    name: Packages
