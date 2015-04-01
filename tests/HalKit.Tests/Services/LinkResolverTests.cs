@@ -27,6 +27,7 @@ namespace HalKit.Tests.Services
             [InlineData("http://host.com/path", false, "foo=foovalue;bar=barvalue", "http://host.com/path?foo=foovalue&bar=barvalue")]
             [InlineData("http://host.com/path?existing=true", false, "foo=foovalue", "http://host.com/path?existing=true&foo=foovalue")]
             [InlineData("http://host.com/path", false, "foo=foo value!", "http://host.com/path?foo=foo%20value%21")]
+            [InlineData("http://host.com/path", false, "foo=foovalue;bar=", "http://host.com/path?foo=foovalue")]
 
             // Spec Examples (See https://github.com/uri-templates/uritemplate-test/blob/master/spec-examples.json)
             // Level 1 Examples

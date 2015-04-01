@@ -38,7 +38,8 @@ namespace HalKit.Services
                 existingQueryParameters += "&";
             }
 
-            var parametersQueryString = string.Join("&", parameters.Select(kv => kv.Key + "=" + kv.Value));
+            var parametersWithValues = parameters.Where(kv => !string.IsNullOrEmpty(kv.Value));
+            var parametersQueryString = string.Join("&", parametersWithValues.Select(kv => kv.Key + "=" + kv.Value));
             uriBuilder.Query = existingQueryParameters + parametersQueryString;
             return uriBuilder.Uri;
         }
