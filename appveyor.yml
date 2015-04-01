@@ -4,9 +4,6 @@ init:
   - git config --global core.autocrlf input
 
 build_script:
-  - cmd: build.cmd BuildApp
-  - cmd: build.cmd UnitTests
-  - cmd: build.cmd SourceLink
   - cmd: build.cmd CreatePackage
 
 test: off
