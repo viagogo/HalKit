@@ -10,7 +10,7 @@ open Fake.XUnit2Helper
 let projectName = "HalKit"
 let projectDescription = "A lightweight .NET library for consuming HAL hypermedia APIs"
 let authors = ["viagogo"]
-let copyright = @"Copyright © viagogo " + DateTime.UtcNow.ToString("yyyy");
+let copyright = @"Copyright viagogo " + DateTime.UtcNow.ToString("yyyy");
 
 // Directories
 let buildDir = @"./artifacts/"

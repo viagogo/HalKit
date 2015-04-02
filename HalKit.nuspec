@@ -7,6 +7,8 @@
     <owners>@authors@</owners>
     <summary>@summary@</summary>
     <description>@description@</description>
+    <licenseUrl>https://github.com/viagogo/HalKit/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/viagogo/HalKit</projectUrl>
     <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>@copyright@</copyright>
     <tags>@tags@</tags>
