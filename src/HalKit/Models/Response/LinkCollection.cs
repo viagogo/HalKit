@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HalKit.Exceptions;
 
-namespace HalKit.Models
+namespace HalKit.Models.Response
 {
     public class LinkCollection : IEnumerable<Link>
     {

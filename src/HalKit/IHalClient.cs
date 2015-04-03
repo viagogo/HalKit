@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using HalKit.Http;
 using HalKit.Models;
-using HalKit.Resources;
+using HalKit.Models.Response;
 
 namespace HalKit
 {

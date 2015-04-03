@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using HalKit.Resources;
+using HalKit.Models.Response;
 
 namespace HalKit
 {

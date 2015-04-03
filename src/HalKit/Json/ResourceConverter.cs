@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HalKit.Models;
-using HalKit.Resources;
+using HalKit.Models.Response;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
