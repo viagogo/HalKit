@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HalKit.Http;
-using HalKit.Models;
 using HalKit.Models.Request;
 using HalKit.Models.Response;
 using HalKit.Services;
@@ -57,6 +56,8 @@ namespace HalKit
 
         public Task<RootResource> GetRootAsync(IRequestParameters request)
         {
+            Requires.ArgumentNotNull(request, "request");
+
             return GetRootAsync(request.Parameters, request.Headers);
         }
 
@@ -82,6 +83,8 @@ namespace HalKit
 
         public Task<T> GetAsync<T>(Link link, IRequestParameters request)
         {
+            Requires.ArgumentNotNull(request, "request");
+
             return GetAsync<T>(link, request.Parameters, request.Headers);
         }
 
@@ -110,6 +113,8 @@ namespace HalKit
 
         public Task<T> PostAsync<T>(Link link, object body, IRequestParameters request)
         {
+            Requires.ArgumentNotNull(request, "request");
+
             return PostAsync<T>(link, body, request.Parameters, request.Headers);
         }
 
@@ -139,6 +144,8 @@ namespace HalKit
 
         public Task<T> PutAsync<T>(Link link, object body, IRequestParameters request)
         {
+            Requires.ArgumentNotNull(request, "request");
+
             return PutAsync<T>(link, body, request.Parameters, request.Headers);
         }
 
@@ -168,6 +175,8 @@ namespace HalKit
 
         public Task<T> PatchAsync<T>(Link link, object body, IRequestParameters request)
         {
+            Requires.ArgumentNotNull(request, "request");
+
             return PatchAsync<T>(link, body, request.Parameters, request.Headers);
         }
 
@@ -197,6 +206,8 @@ namespace HalKit
 
         public Task<IApiResponse> DeleteAsync(Link link, IRequestParameters request)
         {
+            Requires.ArgumentNotNull(request, "request");
+
             return DeleteAsync(link, request.Parameters, request.Headers);
         }
 
