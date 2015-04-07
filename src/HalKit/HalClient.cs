@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using HalKit.Http;
 using HalKit.Models;
+using HalKit.Models.Request;
 using HalKit.Models.Response;
 using HalKit.Services;
 
@@ -54,6 +55,11 @@ namespace HalKit
             return GetRootAsync(parameters, new Dictionary<string, IEnumerable<string>>());
         }
 
+        public Task<RootResource> GetRootAsync(IRequestParameters request)
+        {
+            return GetRootAsync(request.Parameters, request.Headers);
+        }
+
         public Task<RootResource> GetRootAsync(
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
@@ -72,6 +78,11 @@ namespace HalKit
         public Task<T> GetAsync<T>(Link link, IDictionary<string, string> parameters)
         {
             return GetAsync<T>(link, parameters, new Dictionary<string, IEnumerable<string>>());
+        }
+
+        public Task<T> GetAsync<T>(Link link, IRequestParameters request)
+        {
+            return GetAsync<T>(link, request.Parameters, request.Headers);
         }
 
         public Task<T> GetAsync<T>(
@@ -95,6 +106,11 @@ namespace HalKit
         public Task<T> PostAsync<T>(Link link, object body, IDictionary<string, string> parameters)
         {
             return PostAsync<T>(link, body, parameters, new Dictionary<string, IEnumerable<string>>());
+        }
+
+        public Task<T> PostAsync<T>(Link link, object body, IRequestParameters request)
+        {
+            return PostAsync<T>(link, body, request.Parameters, request.Headers);
         }
 
         public Task<T> PostAsync<T>(
@@ -121,6 +137,11 @@ namespace HalKit
             return PutAsync<T>(link, body, parameters, new Dictionary<string, IEnumerable<string>>());
         }
 
+        public Task<T> PutAsync<T>(Link link, object body, IRequestParameters request)
+        {
+            return PutAsync<T>(link, body, request.Parameters, request.Headers);
+        }
+
         public Task<T> PutAsync<T>(
             Link link,
             object body,
@@ -145,6 +166,11 @@ namespace HalKit
             return PatchAsync<T>(link, body, parameters, new Dictionary<string, IEnumerable<string>>());
         }
 
+        public Task<T> PatchAsync<T>(Link link, object body, IRequestParameters request)
+        {
+            return PatchAsync<T>(link, body, request.Parameters, request.Headers);
+        }
+
         public Task<T> PatchAsync<T>(
             Link link,
             object body,
@@ -167,6 +193,11 @@ namespace HalKit
         public Task<IApiResponse> DeleteAsync(Link link, IDictionary<string, string> parameters)
         {
             return DeleteAsync(link, parameters, new Dictionary<string, IEnumerable<string>>());
+        }
+
+        public Task<IApiResponse> DeleteAsync(Link link, IRequestParameters request)
+        {
+            return DeleteAsync(link, request.Parameters, request.Headers);
         }
 
         public async Task<IApiResponse> DeleteAsync(
