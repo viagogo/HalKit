@@ -69,14 +69,14 @@ namespace HalKit.Http
 
                     request.Headers.Add(header.Key, header.Value);
                 }
-                request.Content = await GetRequestContentAsync(method, body, contentType);
+                request.Content = GetRequestContent(method, body, contentType);
 
                 var responseMessage = await _httpClient.SendAsync(request, CancellationToken.None).ConfigureAwait(_configuration);
                 return await _responseFactory.CreateApiResponseAsync<T>(responseMessage).ConfigureAwait(_configuration);
             }
         }
 
-        private async Task<HttpContent> GetRequestContentAsync(
+        private HttpContent GetRequestContent(
             HttpMethod method,
             object body,
             string contentType)
@@ -106,7 +106,7 @@ namespace HalKit.Http
             }
 
             // Anything else gets serialized to JSON
-            var bodyJson = await _jsonSerializer.SerializeAsync(body).ConfigureAwait(_configuration);
+            var bodyJson = _jsonSerializer.Serialize(body);
             return new StringContent(bodyJson, Encoding.UTF8, contentType);
         }
 
