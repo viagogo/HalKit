@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace HalKit.Json
 {
@@ -13,16 +12,14 @@ namespace HalKit.Json
                 Converters = new[] { new ResourceConverter() }
             };
 
-        public Task<string> SerializeAsync(object value)
+        public string Serialize(object value)
         {
-            return Task.Factory.StartNew(
-                () => JsonConvert.SerializeObject(value, Settings));
+            return JsonConvert.SerializeObject(value, Settings);
         }
 
-        public Task<T> DeserializeAsync<T>(string json)
+        public T Deserialize<T>(string json)
         {
-            return Task.Factory.StartNew(
-                () => JsonConvert.DeserializeObject<T>(json, Settings));
+            return JsonConvert.DeserializeObject<T>(json, Settings);
         }
     }
 }

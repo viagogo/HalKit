@@ -111,7 +111,7 @@ namespace HalKit.Tests.Http
 
                 await factory.CreateApiResponseAsync<Foo>(new HttpResponseMessage() { Content = responseContent });
 
-                mockSerializer.Verify(j => j.DeserializeAsync<Foo>(It.IsAny<string>()), Times.Never());
+                mockSerializer.Verify(j => j.Deserialize<Foo>(It.IsAny<string>()), Times.Never());
             }
 
             [Theory, MemberData("JsonContentTypes")]
@@ -121,8 +121,8 @@ namespace HalKit.Tests.Http
                 var expectedJsonText = "{\"id\": 7}";
                 var responseContent = new StringContent(expectedJsonText, Encoding.UTF8, jsonContentType);
                 var mockSerializer = new Mock<IJsonSerializer>(MockBehavior.Loose);
-                mockSerializer.Setup(j => j.DeserializeAsync<Foo>(expectedJsonText))
-                              .Returns(Task.FromResult(new Foo()))
+                mockSerializer.Setup(j => j.Deserialize<Foo>(expectedJsonText))
+                              .Returns(new Foo())
                               .Verifiable();
                 var factory = CreateFactory(serializer: mockSerializer.Object);
 
@@ -138,7 +138,7 @@ namespace HalKit.Tests.Http
                 var expectedBodyAsObject = new Foo();
                 var responseContent = new StringContent("{}", Encoding.UTF8, jsonContentType);
                 var mockSerializer = new Mock<IJsonSerializer>(MockBehavior.Loose);
-                mockSerializer.Setup(j => j.DeserializeAsync<Foo>(It.IsAny<string>())).Returns(Task.FromResult(expectedBodyAsObject));
+                mockSerializer.Setup(j => j.Deserialize<Foo>(It.IsAny<string>())).Returns(expectedBodyAsObject);
                 var factory = CreateFactory(serializer: mockSerializer.Object);
 
                 var actualResponse = await factory.CreateApiResponseAsync<Foo>(new HttpResponseMessage() { Content = responseContent });

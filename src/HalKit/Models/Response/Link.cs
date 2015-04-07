@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace HalKit.Models
+namespace HalKit.Models.Response
 {
     [DataContract]
     public class Link

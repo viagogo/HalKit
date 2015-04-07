@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace HalKit.Resources
+namespace HalKit.Models.Response
 {
     /// <summary>
     /// A <see cref="Resource"/> that acts as the "Home Page" of a Hypermedia-driven

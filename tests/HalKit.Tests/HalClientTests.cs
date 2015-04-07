@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using HalKit.Http;
 using HalKit.Models;
-using HalKit.Resources;
+using HalKit.Models.Response;
 using HalKit.Services;
 using HalKit.Tests.Fakes;
 using Moq;

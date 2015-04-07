@@ -32,7 +32,7 @@ namespace HalKit.Http
                         body = await response.Content.ReadAsStringAsync().ConfigureAwait(_configuration);
                         if (body != null && IsJsonContent(response.Content))
                         {
-                            bodyAsObject = await _jsonSerializer.DeserializeAsync<T>(body).ConfigureAwait(_configuration);
+                            bodyAsObject = _jsonSerializer.Deserialize<T>(body);
                         }
                     }
                     else

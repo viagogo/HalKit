@@ -1,5 +1,5 @@
 ﻿using HalKit.Json;
-using HalKit.Resources;
+using HalKit.Models.Response;
 using Xunit;
 
 namespace HalKit.Tests.Json
@@ -27,24 +27,24 @@ namespace HalKit.Tests.Json
             public dynamic EmbeddedProperty { get; set; }
         }
 
-        public class TheDeserializeAsyncMethod
+        public class TheDeserializeMethod
         {
             [Fact]
-            public async void ShouldDeserializeEmbeddedProperty()
+            public void ShouldDeserializeEmbeddedProperty()
             {
                 var serializer = new DefaultJsonSerializer();
 
-                var foo = await serializer.DeserializeAsync<FooResource>(FooResourceJson);
+                var foo = serializer.Deserialize<FooResource>(FooResourceJson);
 
                 Assert.Equal("Expected embedded message", (string)foo.EmbeddedProperty.message);
             }
 
             [Fact]
-            public async void ShouldDeserializeLinnks()
+            public void ShouldDeserializeLinks()
             {
                 var serializer = new DefaultJsonSerializer();
 
-                var foo = await serializer.DeserializeAsync<FooResource>(FooResourceJson);
+                var foo = serializer.Deserialize<FooResource>(FooResourceJson);
 
                 Assert.Equal("http://api.com/resources/5", foo.Links["docs:some_resource"].HRef);
                 Assert.Equal("Some Resource", foo.Links["docs:some_resource"].Title);
