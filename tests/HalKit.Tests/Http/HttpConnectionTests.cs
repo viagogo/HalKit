@@ -20,11 +20,14 @@ namespace HalKit.Tests.Http
             IHalKitConfiguration config = null,
             IApiResponseFactory responseFactory = null)
         {
+            var mockSerializer = new Mock<IJsonSerializer>(MockBehavior.Loose);
+            mockSerializer.Setup(json => json.Serialize(It.IsAny<object>())).Returns("{}");
+
             return new HttpConnection(
                 handlers ?? new DelegatingHandler[] {},
                 config ?? new HalKitConfiguration(new Uri("http://foo.api.com")),
                 httpFact ?? new FakeHttpClientFactory(),
-                serializer ?? new Mock<IJsonSerializer>(MockBehavior.Loose).Object,
+                serializer ?? mockSerializer.Object,
                 responseFactory ?? new FakeApiResponseFactory());
         }
 
@@ -170,6 +173,103 @@ namespace HalKit.Tests.Http
                     });
 
                 Assert.Same(expectedContent, actualContent);
+            }
+
+            [Fact]
+            public async void ShouldSendAnHttpRequestMessageWithStringContent_WhenBodyIsString()
+            {
+                HttpContent actualContent = null;
+                var mockHttp = new Mock<HttpClient>(MockBehavior.Loose);
+                mockHttp.Setup(h => h.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
+                        .Callback((HttpRequestMessage request, CancellationToken token) =>
+                            actualContent = request.Content)
+                        .Returns(Task.FromResult(new HttpResponseMessage()));
+                var conn = CreateConnection(httpFact: new FakeHttpClientFactory(http: mockHttp.Object));
+
+                await conn.SendRequestAsync<string>(
+                    new Uri("https://api.io"),
+                    HttpMethod.Put,
+                    "{}",
+                    null);
+
+                Assert.IsType<StringContent>(actualContent);
+            }
+
+            [Fact]
+            public async void ShouldSendAnHttpRequestMessageWithHalJsonContentType_WhenBodyIsString_AndContentTypeNotGiven()
+            {
+                HttpContent actualContent = null;
+                var mockHttp = new Mock<HttpClient>(MockBehavior.Loose);
+                mockHttp.Setup(h => h.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
+                        .Callback((HttpRequestMessage request, CancellationToken token) =>
+                            actualContent = request.Content)
+                        .Returns(Task.FromResult(new HttpResponseMessage()));
+                var conn = CreateConnection(httpFact: new FakeHttpClientFactory(http: mockHttp.Object));
+
+                await conn.SendRequestAsync<string>(
+                    new Uri("https://api.io"),
+                    HttpMethod.Put,
+                    "{}",
+                    null);
+
+                Assert.Equal("application/hal+json", actualContent.Headers.ContentType.MediaType);
+            }
+
+            [Fact]
+            public async void ShouldPassBodyToJsonSerializer_WhenBodyIsObject()
+            {
+                var expectedBody = new object();
+                var mockSerializer = new Mock<IJsonSerializer>(MockBehavior.Loose);
+                mockSerializer.Setup(j => j.Serialize(expectedBody)).Returns("{}").Verifiable();
+                var conn = CreateConnection(serializer: mockSerializer.Object);
+
+                await conn.SendRequestAsync<string>(
+                    new Uri("https://api.io"),
+                    HttpMethod.Put,
+                    expectedBody,
+                    null);
+
+                mockSerializer.Verify();
+            }
+
+            [Fact]
+            public async void ShouldSendAnHttpRequestMessageWithStringContent_WhenBodyIsObject()
+            {
+                HttpContent actualContent = null;
+                var mockHttp = new Mock<HttpClient>(MockBehavior.Loose);
+                mockHttp.Setup(h => h.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
+                        .Callback((HttpRequestMessage request, CancellationToken token) =>
+                            actualContent = request.Content)
+                        .Returns(Task.FromResult(new HttpResponseMessage()));
+                var conn = CreateConnection(httpFact: new FakeHttpClientFactory(http: mockHttp.Object));
+
+                await conn.SendRequestAsync<string>(
+                    new Uri("https://api.io"),
+                    HttpMethod.Put,
+                    new object(),
+                    null);
+
+                Assert.IsType<StringContent>(actualContent);
+            }
+
+            [Fact]
+            public async void ShouldSendAnHttpRequestMessageWithHalJsonContentType_WhenBodyIsObject_AndContentTypeNotGiven()
+            {
+                HttpContent actualContent = null;
+                var mockHttp = new Mock<HttpClient>(MockBehavior.Loose);
+                mockHttp.Setup(h => h.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
+                        .Callback((HttpRequestMessage request, CancellationToken token) =>
+                            actualContent = request.Content)
+                        .Returns(Task.FromResult(new HttpResponseMessage()));
+                var conn = CreateConnection(httpFact: new FakeHttpClientFactory(http: mockHttp.Object));
+
+                await conn.SendRequestAsync<string>(
+                    new Uri("https://api.io"),
+                    HttpMethod.Put,
+                    new object(),
+                    null);
+
+                Assert.Equal("application/hal+json", actualContent.Headers.ContentType.MediaType);
             }
 
             [Fact]

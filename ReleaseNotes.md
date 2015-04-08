@@ -1,3 +1,6 @@
+### New in 0.2.1 (Released 2015/04/08)
+* Fixed a bug in HttpConnection where we weren't defaulting request body Content-Type to application/hal+json
+
 ### New in 0.2.0 (Released 2015/04/07)
 * Added IRequestParameters DTO that represents the query params and headers to be used in a request
 * Re-structured the namespaces of the model objects
