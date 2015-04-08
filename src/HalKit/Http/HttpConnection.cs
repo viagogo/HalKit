@@ -57,7 +57,7 @@ namespace HalKit.Http
 
             using (var request = new HttpRequestMessage {RequestUri = uri, Method = method})
             {
-                string contentType = null;
+                var contentType = "application/hal+json";
                 headers = headers ?? new Dictionary<string, IEnumerable<string>>();
                 foreach (var header in headers)
                 {
