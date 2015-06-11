@@ -59,7 +59,7 @@ namespace HalKit.Json
             JObject resourceJson,
             JsonSerializer serializer)
         {
-            var reservedPropertyJson = new JObject();
+            var reservedHalJson = new JObject();
             foreach (var relAndProperty in relToPropertyMap)
             {
                 var rel = relAndProperty.Key;
@@ -71,12 +71,21 @@ namespace HalKit.Json
                     continue;
                 }
 
-                reservedPropertyJson.Add(rel, JToken.FromObject(propertyValue, serializer));
+                var propertyJson = new JProperty(rel, JToken.FromObject(propertyValue, serializer));
+                if (rel == "self")
+                {
+                    // Just seems "right" for the "self" link to be first
+                    reservedHalJson.AddFirst(propertyJson);
+                }
+                else
+                {
+                    reservedHalJson.Add(propertyJson);
+                }
             }
 
-            if (reservedPropertyJson.Count > 0)
+            if (reservedHalJson.Count > 0)
             {
-                resourceJson.Add(reservedPropertyName, reservedPropertyJson);
+                resourceJson.Add(reservedPropertyName, reservedHalJson);
             }
         }
 
@@ -104,8 +113,8 @@ namespace HalKit.Json
                 out linkPropertiesMap,
                 out embeddedPropertiesMap);
 
-            DeserializeAndAssignProperties(json, Links, linkPropertiesMap, ref resource);
-            DeserializeAndAssignProperties(json, Embedded, embeddedPropertiesMap, ref resource);
+            DeserializeAndAssignProperties(json, Links, jsonHasLinks, linkPropertiesMap, ref resource);
+            DeserializeAndAssignProperties(json, Embedded, jsonHasEmbedded, embeddedPropertiesMap, ref resource);
 
             return resource;
         }
@@ -113,10 +122,11 @@ namespace HalKit.Json
         private void DeserializeAndAssignProperties(
             JToken json,
             string jsonKey,
+            bool jsonHasKey,
             IDictionary<string, PropertyInfo> propertiesMap,
             ref Resource resource)
         {
-            if (propertiesMap == null)
+            if (propertiesMap == null || !jsonHasKey)
             {
                 // No properties in this object are mapped with any attributes so bail
                 return;
@@ -149,7 +159,7 @@ namespace HalKit.Json
             // each type
             linkPropertiesMap = new Dictionary<string, PropertyInfo>();
             embeddedPropertiesMap = new Dictionary<string, PropertyInfo>();
-            foreach (var property in objectType.GetTypeInfo().DeclaredProperties)
+            foreach (var property in objectType.GetRuntimeProperties())
             {
                 var embeddedAttribute = property.GetCustomAttribute<EmbeddedAttribute>(true);
                 if (embeddedAttribute != null)

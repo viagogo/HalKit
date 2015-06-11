@@ -19,6 +19,11 @@ namespace HalKit.Tests.Json
     ]
   },
   ""_links"": {
+    ""self"": {
+      ""href"": ""http://api.com/self"",
+      ""title"": ""Self"",
+      ""templated"": false
+    },
     ""docs:some_resource"": {
       ""href"": ""http://api.com/resources/5"",
       ""title"": ""Some Resource"",
@@ -131,6 +136,31 @@ namespace HalKit.Tests.Json
                 Assert.Null(foo.NullEmbeddedProperty);
             }
 
+            [Theory]
+            [InlineData(@"{""normal_property"": {}}")]
+            [InlineData(@"{""normal_property"": {}, ""_embedded"": {""e"": {}}}")]
+            [InlineData(@"{""normal_property"": {}, ""_links"": {""l"": {}}}")]
+            public void ShouldDeserializeObject_WhenJsonDoesNotReturnLinksOrEmbeddedProperties(string json)
+            {
+                var converter = new ResourceConverter();
+
+                var foo = JsonConvert.DeserializeObject<FooResource>(json, converter);
+
+                Assert.NotNull(foo.NormalProperty);
+            }
+
+            [Fact]
+            public void ShouldDeserializeSelfLinkProperty()
+            {
+                var converter = new ResourceConverter();
+
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+
+                Assert.Equal("http://api.com/self", foo.SelfLink.HRef);
+                Assert.Equal("Self", foo.SelfLink.Title);
+                Assert.False(foo.SelfLink.IsTemplated);
+            }
+
             [Fact]
             public void ShouldDeserializeLinkProperty()
             {
@@ -185,6 +215,7 @@ namespace HalKit.Tests.Json
                                         NormalProperty = new { property_one = "one", property_two = new[] { 2, 3 }},
                                         EmbeddedProperty = new { message = "Expected embedded message" },
                                         NullEmbeddedProperty = null,
+                                        SelfLink = new Link { HRef = "http://api.com/self", Title = "Self", IsTemplated = false },
                                         LinkProperty = new Link { HRef = "http://api.com/resources/5", Title = "Some Resource", IsTemplated = true },
                                         NullLinkProperty = null,
                                         LinkArrayProperty = new[]
