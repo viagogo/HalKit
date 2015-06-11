@@ -1,6 +1,7 @@
 ﻿using HalKit.Json;
 using HalKit.Models.Response;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Xunit;
 
@@ -174,7 +175,8 @@ namespace HalKit.Tests.Json
             [Fact]
             public void ShouldSerializeResourceEmbeddedProperties()
             {
-                var expectedJson = FooResourceJson;
+                // Deserialize and then serialize to get rid of all of the new lines
+                var expectedJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(FooResourceJson));
                 var converter = new ResourceConverter();
 
                 var actualJson = JsonConvert.SerializeObject(
@@ -194,7 +196,7 @@ namespace HalKit.Tests.Json
                                     new JsonSerializerSettings
                                     {
                                         Converters = new[] {converter},
-                                        Formatting = Formatting.Indented
+                                        Formatting = Formatting.None
                                     });
 
                 Assert.Equal(expectedJson, actualJson);
