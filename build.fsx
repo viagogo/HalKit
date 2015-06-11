@@ -8,7 +8,7 @@ open Fake.XUnit2Helper
 
 // Project information used to generate AssemblyInfo and .nuspec
 let projectName = "HalKit"
-let projectDescription = "A lightweight .NET library for consuming HAL hypermedia APIs"
+let projectDescription = "A lightweight .NET library for creating and consuming HAL hypermedia APIs"
 let authors = ["viagogo"]
 let copyright = @"Copyright viagogo " + DateTime.UtcNow.ToString("yyyy");
 

@@ -1,4 +1,4 @@
-# HalKit - HAL API Client Library for .NET
+# HalKit - HAL API Client & Server Library for .NET
 
 [![Build status](https://ci.appveyor.com/api/projects/status/h9y4iv2ewqama4qw/branch/master?svg=true)][appveyor]
 [![NuGet version](https://badge.fury.io/nu/halkit.svg)][badgefury]
@@ -6,17 +6,62 @@
 [appveyor]: https://ci.appveyor.com/project/viagogo/halkit/branch/master
 [badgefury]: http://badge.fury.io/nu/halkit
 
-HalKit is a lightweight client library, targeting .NET 4.5 and above, that provides an easy way to interact with HAL hypermedia APIs.
+HalKit is a lightweight library, targeting .NET 4.5 and above, that provides an easy way to interact with [HAL][hal] hypermedia APIs.
+
+[hal]: http://stateless.co/hal_specification.html
+
+
+## Getting Started
+
+HalKit is available on NuGet.
+
+```
+Install-Package HalKit
+```
+
 
 ## Usage
 
+Create models for API resources.
+
 ```c#
-var api = new HalClient(new HalKitConfiguration("http://hal-api.com"));
-var root = await api.GetRootAsync();
+public class RootResource : Resource
+{
+    // Use RelAttribute to (de)serialize links
+    [Rel("ea:orders")]
+    public Link OrdersLink { get; set; }
+}
+
+public class OrdersResource : Resource
+{
+    // Use the EmbeddedAttribute to (de)serialize embedded resources
+    [Embedded("ea:order")]
+    IList<OrderResource> Orders { get; set; }
+}
+
+public class OrderResource : Resource
+{
+    public string Status { get; set; }
+
+    [Rel("ea:customer")]
+    public Link CustomerLink { get; set; }
+}
+```
+
+Clients can use a HalClient to access resources.
+
+```c#
+var api = new HalClient(new HalKitConfiguration("http://orders-api.com"));
+var root = await api.GetRootAsync<RootResource>();
 
 // Use the HalClient to follow hypermedia links
-var fooResource = await api.GetAsync<FooResource>(root.Links["foo"]);
+var ordersResource = await api.GetAsync<OrdersResource>(root.OrdersLink);
+foreach (var order in ordersResource.Orders)
+{
+    Console.WriteLine(order.Status);
+}
 ```
+
 
 ## Supported Platforms
 
@@ -26,10 +71,15 @@ var fooResource = await api.GetAsync<FooResource>(root.Links["foo"]);
 * Xamarin.iOS / Xamarin.Android / Xamarin.Mac
 * Mono 3.x
 
-## Getting Started
 
-HalKit is available on NuGet.
+## How to contribute
 
-```
-Install-Package HalKit
-```
+All submissions are welcome. Fork the repository, read the rest of this README
+file and make some changes. Once you're done with your changes send a pull
+request. Thanks!
+
+
+## Need Help? Found a bug?
+
+Just [submit a issue][submitanissue] if you need any help. And, of course, feel
+free to submit pull requests with bug fixes or changes.

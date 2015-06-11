@@ -1,3 +1,7 @@
+### New in 0.3.0 (Released 2015/06/11)
+* Added RelAttribute that can be used to adorn Link properties
+* Updated ResourceConverter to also support serializing Resources
+
 ### New in 0.2.1 (Released 2015/04/08)
 * Fixed a bug in HttpConnection where we weren't defaulting request body Content-Type to application/hal+json
 
