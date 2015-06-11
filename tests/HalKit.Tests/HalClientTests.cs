@@ -67,7 +67,7 @@ namespace HalKit.Tests
                 var client = CreateClient(resolver: mockResolver.Object,
                                           config: new HalKitConfiguration(new Uri(expectedHRef)));
 
-                await client.GetRootAsync(null, null);
+                await client.GetRootAsync<Resource>(null, null);
 
                 mockResolver.Verify();
             }
@@ -76,14 +76,14 @@ namespace HalKit.Tests
             public async void ShouldPassGivenParametersToLinkResolver()
             {
                 await VerifyGivenParametersArePassedToLinkResolver(
-                    (client, parameters) => client.GetRootAsync(parameters, null));
+                    (client, parameters) => client.GetRootAsync<Resource>(parameters, null));
             }
 
             [Fact]
             public async void ShouldSendRequestToUriReturnedByLinkResolver()
             {
-                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<RootResource>(
-                    client => client.GetRootAsync(
+                await VerifyUriReturnedByLinkResolverIsPassedToHttpConnection<Resource>(
+                    client => client.GetRootAsync<Resource>(
                                 null,
                                 new Dictionary<string, IEnumerable<string>>{{"Foo", new[] {"Bar"}}}));
             }
@@ -91,38 +91,38 @@ namespace HalKit.Tests
             [Fact]
             public async void ShouldSendRequestWithHttpGetMethod()
             {
-                await VerifyHttpMethodIsPassedToHttpConnection<RootResource>(
+                await VerifyHttpMethodIsPassedToHttpConnection<Resource>(
                     HttpMethod.Get,
-                    client => client.GetRootAsync(null, null));
+                    client => client.GetRootAsync<Resource>(null, null));
             }
 
             [Fact]
             public async void ShouldSendRequestWithNullBody()
             {
-                await VerifyBodyIsPassedToHttpConnection<RootResource>(
+                await VerifyBodyIsPassedToHttpConnection<Resource>(
                     null,
-                    client => client.GetRootAsync(null, null));
+                    client => client.GetRootAsync<Resource>(null, null));
             }
 
             [Fact]
             public async void ShouldSendRequestWithAcceptHeaderSetToHalJson()
             {
-                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<RootResource>(
-                    client => client.GetRootAsync(null, null));
+                await VerifyAcceptHalJsonHeaderIsPassedToHttpConnection<Resource>(
+                    client => client.GetRootAsync<Resource>(null, null));
             }
 
             [Fact]
             public async void ShouldSendRequestWithGivenHeaderSetToHalJson()
             {
-                await VerifyGivenHeaderIsPassedToHttpConnection<RootResource>(
-                    (client, headers) => client.GetRootAsync(null, headers));
+                await VerifyGivenHeaderIsPassedToHttpConnection<Resource>(
+                    (client, headers) => client.GetRootAsync<Resource>(null, headers));
             }
 
             [Fact]
             public async void ShouldReturnRootResourceReturnedByHttpConnection()
             {
-                await VerifyBodyOfApiResponseIsReturned(
-                    client => client.GetRootAsync(null, null));
+                await VerifyBodyOfApiResponseIsReturned<Resource>(
+                    client => client.GetRootAsync<Resource>(null, null));
             }
         }
 

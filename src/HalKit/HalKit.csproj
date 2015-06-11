@@ -35,18 +35,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HalClient.cs" />
+    <Compile Include="Json\RelAttribute.cs" />
     <Compile Include="Models\Request\IRequestParameters.cs" />
-    <Compile Include="Models\Response\CurieLink.cs" />
     <Compile Include="Models\Response\Link.cs" />
-    <Compile Include="Models\Response\LinkCollection.cs" />
     <Compile Include="Models\Response\Resource.cs" />
-    <Compile Include="Models\Response\RootResource.cs" />
     <Compile Include="Services\ILinkResolver.cs" />
     <Compile Include="Services\LinkResolver.cs" />
     <Compile Include="Http\HttpConnection.cs" />
     <Compile Include="Http\IHttpConnection.cs" />
     <Compile Include="IHalClient.cs" />
-    <Compile Include="Exceptions\LinkNotFoundException.cs" />
     <Compile Include="Json\DefaultJsonSerializer.cs" />
     <Compile Include="Json\EmbeddedAttribute.cs" />
     <Compile Include="Json\ResourceConverter.cs" />

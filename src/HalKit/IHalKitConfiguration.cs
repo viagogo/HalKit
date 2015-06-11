@@ -7,7 +7,7 @@ namespace HalKit
     public interface IHalKitConfiguration
     {
         /// <summary>
-        /// The <see cref="Uri"/> of the <see cref="RootResource"/> of an API.
+        /// The <see cref="Uri"/> of the <see cref="Resource"/> of an API.
         /// This resource provides links to other API resources.
         /// </summary>
         Uri RootEndpoint { get; set; }

@@ -44,28 +44,32 @@ namespace HalKit
             _linkResolver = linkResolver;
         }
 
-        public Task<RootResource> GetRootAsync()
+        public Task<TRootResource> GetRootAsync<TRootResource>()
+            where TRootResource : Resource
         {
-            return GetRootAsync(new Dictionary<string, string>());
+            return GetRootAsync<TRootResource>(new Dictionary<string, string>());
         }
 
-        public Task<RootResource> GetRootAsync(IDictionary<string, string> parameters)
+        public Task<TRootResource> GetRootAsync<TRootResource>(IDictionary<string, string> parameters)
+            where TRootResource : Resource
         {
-            return GetRootAsync(parameters, new Dictionary<string, IEnumerable<string>>());
+            return GetRootAsync<TRootResource>(parameters, new Dictionary<string, IEnumerable<string>>());
         }
 
-        public Task<RootResource> GetRootAsync(IRequestParameters request)
+        public Task<TRootResource> GetRootAsync<TRootResource>(IRequestParameters request)
+            where TRootResource : Resource
         {
             Requires.ArgumentNotNull(request, "request");
 
-            return GetRootAsync(request.Parameters, request.Headers);
+            return GetRootAsync<TRootResource>(request.Parameters, request.Headers);
         }
 
-        public Task<RootResource> GetRootAsync(
+        public Task<TRootResource> GetRootAsync<TRootResource>(
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
+            where TRootResource : Resource
         {
-            return GetAsync<RootResource>(
+            return GetAsync<TRootResource>(
                 new Link {HRef = _configuration.RootEndpoint.OriginalString},
                 parameters,
                 headers);

@@ -8,15 +8,18 @@ namespace HalKit
 {
     public interface IHalClient
     {
-        Task<RootResource> GetRootAsync();
+        Task<TRootResource> GetRootAsync<TRootResource>() where TRootResource : Resource;
 
-        Task<RootResource> GetRootAsync(IDictionary<string, string> parameters);
+        Task<TRootResource> GetRootAsync<TRootResource>(IDictionary<string, string> parameters)
+             where TRootResource : Resource;
 
-        Task<RootResource> GetRootAsync(IRequestParameters request);
+        Task<TRootResource> GetRootAsync<TRootResource>(IRequestParameters request)
+             where TRootResource : Resource;
 
-        Task<RootResource> GetRootAsync(
+        Task<TRootResource> GetRootAsync<TRootResource>(
             IDictionary<string, string> parameters,
-            IDictionary<string, IEnumerable<string>> headers);
+            IDictionary<string, IEnumerable<string>> headers)
+             where TRootResource : Resource;
 
         Task<T> GetAsync<T>(Link link);
 
