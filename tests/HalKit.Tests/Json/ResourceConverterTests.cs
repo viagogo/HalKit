@@ -10,39 +10,54 @@ namespace HalKit.Tests.Json
     {
         private const string FooResourceJson =
 @"{
+  ""normal_property"": {
+    ""property_one"": ""one"",
+    ""property_two"": [
+      2,
+      3
+    ]
+  },
   ""_links"": {
-    ""curies"": [
-      {""name"": ""docs"",""href"": ""http://foo.com/rels/{rel}""}
-    ],
     ""docs:some_resource"": {
       ""href"": ""http://api.com/resources/5"",
       ""title"": ""Some Resource"",
       ""templated"": true
     },
     ""docs:bars"": [
-        {
-          ""href"": ""http://api.com/bars/1"",
-          ""title"": ""Bar 1"",
-          ""templated"": false
-        },
-        {
-          ""href"": ""http://api.com/bars/2"",
-          ""title"": ""Bar 2"",
-          ""templated"": true
-        },
+      {
+        ""href"": ""http://api.com/bars/1"",
+        ""title"": ""Bar 1"",
+        ""templated"": false
+      },
+      {
+        ""href"": ""http://api.com/bars/2"",
+        ""title"": ""Bar 2"",
+        ""templated"": true
+      }
     ]
   },
   ""_embedded"": {
-    ""docs:some_resource"": {""message"": ""Expected embedded message""}
+    ""docs:some_resource"": {
+      ""message"": ""Expected embedded message""
+    }
   }
 }";
         public class FooResource : Resource
         {
+            [JsonProperty(PropertyName = "normal_property")]
+            public dynamic NormalProperty { get; set; }
+
             [Embedded("docs:some_resource")]
             public dynamic EmbeddedProperty { get; set; }
 
+            [Embedded("docs:not_in_json")]
+            public object NullEmbeddedProperty { get; set; }
+
             [Rel("docs:some_resource")]
             public Link LinkProperty { get; set; }
+
+            [Rel("docs:not_in_json")]
+            public Link NullLinkProperty { get; set; }
 
             [Rel("docs:bars")]
             public IList<Link> LinkArrayProperty { get; set; }
@@ -106,6 +121,16 @@ namespace HalKit.Tests.Json
             }
 
             [Fact]
+            public void ShouldDeserializeEmbeddedPropertyToNull_WhenTheRelIsNotInTheJson()
+            {
+                var converter = new ResourceConverter();
+
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+
+                Assert.Null(foo.NullEmbeddedProperty);
+            }
+
+            [Fact]
             public void ShouldDeserializeLinkProperty()
             {
                 var converter = new ResourceConverter();
@@ -115,6 +140,16 @@ namespace HalKit.Tests.Json
                 Assert.Equal("http://api.com/resources/5", foo.LinkProperty.HRef);
                 Assert.Equal("Some Resource", foo.LinkProperty.Title);
                 Assert.True(foo.LinkProperty.IsTemplated);
+            }
+
+            [Fact]
+            public void ShouldDeserializeLinkPropertyToNull_WhenTheRelIsNotInTheJson()
+            {
+                var converter = new ResourceConverter();
+
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+
+                Assert.Null(foo.NullLinkProperty);
             }
 
             [Fact]
@@ -131,6 +166,38 @@ namespace HalKit.Tests.Json
                 Assert.Equal("http://api.com/bars/2", foo.LinkArrayProperty[1].HRef);
                 Assert.Equal("Bar 2", foo.LinkArrayProperty[1].Title);
                 Assert.True(foo.LinkArrayProperty[1].IsTemplated);
+            }
+        }
+
+        public class TheWriteJsonMethod
+        {
+            [Fact]
+            public void ShouldSerializeResourceEmbeddedProperties()
+            {
+                var expectedJson = FooResourceJson;
+                var converter = new ResourceConverter();
+
+                var actualJson = JsonConvert.SerializeObject(
+                                    new FooResource
+                                    {
+                                        NormalProperty = new { property_one = "one", property_two = new[] { 2, 3 }},
+                                        EmbeddedProperty = new { message = "Expected embedded message" },
+                                        NullEmbeddedProperty = null,
+                                        LinkProperty = new Link { HRef = "http://api.com/resources/5", Title = "Some Resource", IsTemplated = true },
+                                        NullLinkProperty = null,
+                                        LinkArrayProperty = new[]
+                                        {
+                                            new Link {HRef = "http://api.com/bars/1", Title = "Bar 1", IsTemplated = false},
+                                            new Link {HRef = "http://api.com/bars/2", Title = "Bar 2", IsTemplated = true},
+                                        }
+                                    },
+                                    new JsonSerializerSettings
+                                    {
+                                        Converters = new[] {converter},
+                                        Formatting = Formatting.Indented
+                                    });
+
+                Assert.Equal(expectedJson, actualJson);
             }
         }
     }
