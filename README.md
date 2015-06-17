@@ -1,10 +1,11 @@
 # HalKit - HAL API Client & Server Library for .NET
 
+[![NuGet version](https://badge.fury.io/nu/halkit.svg)][nuget]
+[![Downloads](https://img.shields.io/nuget/dt/halkit.svg)][nuget]
 [![Build status](https://ci.appveyor.com/api/projects/status/h9y4iv2ewqama4qw/branch/master?svg=true)][appveyor]
-[![NuGet version](https://badge.fury.io/nu/halkit.svg)][badgefury]
 
+[nuget]: http://www.nuget.org/packages/HalKit
 [appveyor]: https://ci.appveyor.com/project/viagogo/halkit/branch/master
-[badgefury]: http://badge.fury.io/nu/halkit
 
 HalKit is a lightweight library, targeting .NET 4.5 and above, that provides an easy way to interact with [HAL][hal] hypermedia APIs.
 
