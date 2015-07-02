@@ -62,6 +62,8 @@
     </Compile>
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Requires.cs" />
+    <Compile Include="Utilities\LinkAndEmbeddedPropertiesLookup.cs" />
+    <Compile Include="Utilities\ThreadSafeStore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

@@ -1,3 +1,6 @@
+### New in 0.4.0 (Released 2015/07/02)
+* Improved ResourceConverter performance
+
 ### New in 0.3.0 (Released 2015/06/11)
 * Added RelAttribute that can be used to adorn Link properties
 * Updated ResourceConverter to also support serializing Resources
