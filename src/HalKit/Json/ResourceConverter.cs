@@ -5,6 +5,8 @@ using HalKit.Models.Response;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using Newtonsoft.Json.Utilities;
+using HalKit.Utilities;
 
 namespace HalKit.Json
 {
@@ -13,6 +15,9 @@ namespace HalKit.Json
     /// </summary>
     public class ResourceConverter : JsonConverter
     {
+        private static ThreadSafeStore<Type, LinkAndEmbeddedPropertiesLookup> PropertiesLookupCache
+            = new ThreadSafeStore<Type, LinkAndEmbeddedPropertiesLookup>(t => new LinkAndEmbeddedPropertiesLookup(t));
+
         private const string Links = "_links";
         private const string Embedded = "_embedded";
 
@@ -39,22 +44,16 @@ namespace HalKit.Json
             var resourceJson = (JObject)JToken.FromObject(resource, serializer);
             serializer.Converters.Add(this);
 
-            Dictionary<string, PropertyInfo> linkPropertiesMap;
-            Dictionary<string, PropertyInfo> embeddedPropertiesMap;
-            GetPropertiesWithRelAndEmbeddedAttributes(
-                resource.GetType(),
-                out linkPropertiesMap,
-                out embeddedPropertiesMap);
-
-            AddReservedHalProperty(Links, linkPropertiesMap, resource, resourceJson, serializer);
-            AddReservedHalProperty(Embedded, embeddedPropertiesMap, resource, resourceJson, serializer);
+            var propertiesLookup = PropertiesLookupCache.Get(resource.GetType());
+            AddReservedHalProperty(Links, propertiesLookup.LinkPropertiesMap, resource, resourceJson, serializer);
+            AddReservedHalProperty(Embedded, propertiesLookup.EmbeddedPropertiesMap, resource, resourceJson, serializer);
 
             resourceJson.WriteTo(writer, serializer.Converters.ToArray());
         }
 
         private void AddReservedHalProperty(
             string reservedPropertyName,
-            IDictionary<string, PropertyInfo> relToPropertyMap,
+            IReadOnlyDictionary<string, PropertyInfo> relToPropertyMap,
             object resource,
             JObject resourceJson,
             JsonSerializer serializer)
@@ -106,15 +105,9 @@ namespace HalKit.Json
                 return resource;
             }
 
-            Dictionary<string, PropertyInfo> linkPropertiesMap;
-            Dictionary<string, PropertyInfo> embeddedPropertiesMap;
-            GetPropertiesWithRelAndEmbeddedAttributes(
-                objectType,
-                out linkPropertiesMap,
-                out embeddedPropertiesMap);
-
-            DeserializeAndAssignProperties(json, Links, jsonHasLinks, linkPropertiesMap, ref resource);
-            DeserializeAndAssignProperties(json, Embedded, jsonHasEmbedded, embeddedPropertiesMap, ref resource);
+            var propertiesLookup = PropertiesLookupCache.Get(resource.GetType());
+            DeserializeAndAssignProperties(json, Links, jsonHasLinks, propertiesLookup.LinkPropertiesMap, ref resource);
+            DeserializeAndAssignProperties(json, Embedded, jsonHasEmbedded, propertiesLookup.EmbeddedPropertiesMap, ref resource);
 
             return resource;
         }
@@ -123,7 +116,7 @@ namespace HalKit.Json
             JToken json,
             string jsonKey,
             bool jsonHasKey,
-            IDictionary<string, PropertyInfo> propertiesMap,
+            IReadOnlyDictionary<string, PropertyInfo> propertiesMap,
             ref Resource resource)
         {
             if (propertiesMap == null || !jsonHasKey)
@@ -147,31 +140,6 @@ namespace HalKit.Json
                                                     property.PropertyType,
                                                     this);
                 property.SetValue(resource, deserializedPropertyValue);
-            }
-        }
-
-        private void GetPropertiesWithRelAndEmbeddedAttributes(
-            Type objectType,
-            out Dictionary<string, PropertyInfo> linkPropertiesMap,
-            out Dictionary<string, PropertyInfo> embeddedPropertiesMap)
-        {
-            // TODO: We could probably have a static cache of these lookups for
-            // each type
-            linkPropertiesMap = new Dictionary<string, PropertyInfo>();
-            embeddedPropertiesMap = new Dictionary<string, PropertyInfo>();
-            foreach (var property in objectType.GetRuntimeProperties())
-            {
-                var embeddedAttribute = property.GetCustomAttribute<EmbeddedAttribute>(true);
-                if (embeddedAttribute != null)
-                {
-                    embeddedPropertiesMap.Add(embeddedAttribute.Rel, property);
-                }
-
-                var linkAttribute = property.GetCustomAttribute<RelAttribute>(true);
-                if (linkAttribute != null)
-                {
-                    linkPropertiesMap.Add(linkAttribute.Rel, property);
-                }
             }
         }
     }
