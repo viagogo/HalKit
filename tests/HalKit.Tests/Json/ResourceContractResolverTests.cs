@@ -1,13 +1,12 @@
 ﻿using HalKit.Json;
 using HalKit.Models.Response;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Xunit;
 
 namespace HalKit.Tests.Json
 {
-    public class ResourceConverterTests
+    public class ResourceContractResolverTests
     {
         private const string FooResourceJson =
 @"{
@@ -24,11 +23,6 @@ namespace HalKit.Tests.Json
       ""title"": ""Self"",
       ""templated"": false
     },
-    ""docs:some_resource"": {
-      ""href"": ""http://api.com/resources/5"",
-      ""title"": ""Some Resource"",
-      ""templated"": true
-    },
     ""docs:bars"": [
       {
         ""href"": ""http://api.com/bars/1"",
@@ -40,7 +34,12 @@ namespace HalKit.Tests.Json
         ""title"": ""Bar 2"",
         ""templated"": true
       }
-    ]
+    ],
+    ""docs:some_resource"": {
+      ""href"": ""http://api.com/resources/5"",
+      ""title"": ""Some Resource"",
+      ""templated"": true
+    }
   },
   ""_embedded"": {
     ""docs:some_resource"": {
@@ -69,59 +68,21 @@ namespace HalKit.Tests.Json
             public IList<Link> LinkArrayProperty { get; set; }
         }
 
-        public class TheCanReadProperty
+        private static JsonSerializerSettings CreateSettingsWithContractResolver(Formatting formatting = Formatting.None)
         {
-            [Fact]
-            public void ShouldReturnTrue()
-            {
-                var converter = new ResourceConverter();
+            var settings = new JsonSerializerSettings {Formatting = formatting};
+            settings.ContractResolver = new ResourceContractResolver(settings);
 
-                Assert.True(converter.CanRead);
-            }
+            return settings;
         }
-        
-        public class TheCanWriteProperty
-        {
-            [Fact]
-            public void ShouldReturnTrue()
-            {
-                var converter = new ResourceConverter();
-
-                Assert.True(converter.CanWrite);
-            }
-        }
-
-        public class TheCanConvertMethod
-        {
-            [Fact]
-            public void ShouldReturnTrue_WhenGivenTypeIsDerivedFromResource()
-            {
-                var converter = new ResourceConverter();
-
-                var result = converter.CanConvert(typeof(FooResource));
-
-                Assert.True(result);
-            }
-
-            [Fact]
-            public void ShouldReturnFalse_WhenGivenTypeIsNotDerivedFromResource()
-            {
-                var converter = new ResourceConverter();
-
-                var result = converter.CanConvert(typeof(Link));
-
-                Assert.False(result);
-            }
-        }
-
-        public class TheReadJsonMethod
+        public class TheDeserializeObjectMethod
         {
             [Fact]
             public void ShouldDeserializeEmbeddedProperty()
             {
-                var converter = new ResourceConverter();
+                var settingsWithResolver = CreateSettingsWithContractResolver();
 
-                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, settingsWithResolver);
 
                 Assert.Equal("Expected embedded message", (string)foo.EmbeddedProperty.message);
             }
@@ -129,9 +90,9 @@ namespace HalKit.Tests.Json
             [Fact]
             public void ShouldDeserializeEmbeddedPropertyToNull_WhenTheRelIsNotInTheJson()
             {
-                var converter = new ResourceConverter();
+                var settingsWithResolver = CreateSettingsWithContractResolver();
 
-                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, settingsWithResolver);
 
                 Assert.Null(foo.NullEmbeddedProperty);
             }
@@ -142,9 +103,9 @@ namespace HalKit.Tests.Json
             [InlineData(@"{""normal_property"": {}, ""_links"": {""l"": {}}}")]
             public void ShouldDeserializeObject_WhenJsonDoesNotReturnLinksOrEmbeddedProperties(string json)
             {
-                var converter = new ResourceConverter();
+                var settingsWithResolver = CreateSettingsWithContractResolver();
 
-                var foo = JsonConvert.DeserializeObject<FooResource>(json, converter);
+                var foo = JsonConvert.DeserializeObject<FooResource>(json, settingsWithResolver);
 
                 Assert.NotNull(foo.NormalProperty);
             }
@@ -152,9 +113,9 @@ namespace HalKit.Tests.Json
             [Fact]
             public void ShouldDeserializeSelfLinkProperty()
             {
-                var converter = new ResourceConverter();
+                var settingsWithResolver = CreateSettingsWithContractResolver();
 
-                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, settingsWithResolver);
 
                 Assert.Equal("http://api.com/self", foo.SelfLink.HRef);
                 Assert.Equal("Self", foo.SelfLink.Title);
@@ -164,9 +125,9 @@ namespace HalKit.Tests.Json
             [Fact]
             public void ShouldDeserializeLinkProperty()
             {
-                var converter = new ResourceConverter();
+                var settingsWithResolver = CreateSettingsWithContractResolver();
 
-                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, settingsWithResolver);
 
                 Assert.Equal("http://api.com/resources/5", foo.LinkProperty.HRef);
                 Assert.Equal("Some Resource", foo.LinkProperty.Title);
@@ -176,9 +137,9 @@ namespace HalKit.Tests.Json
             [Fact]
             public void ShouldDeserializeLinkPropertyToNull_WhenTheRelIsNotInTheJson()
             {
-                var converter = new ResourceConverter();
+                var settingsWithResolver = CreateSettingsWithContractResolver();
 
-                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, settingsWithResolver);
 
                 Assert.Null(foo.NullLinkProperty);
             }
@@ -186,9 +147,9 @@ namespace HalKit.Tests.Json
             [Fact]
             public void ShouldDeserializeLinksArrayProperty()
             {
-                var converter = new ResourceConverter();
+                var settingsWithResolver = CreateSettingsWithContractResolver();
 
-                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, converter);
+                var foo = JsonConvert.DeserializeObject<FooResource>(FooResourceJson, settingsWithResolver);
 
                 Assert.Equal(2, foo.LinkArrayProperty.Count);
                 Assert.Equal("http://api.com/bars/1", foo.LinkArrayProperty[0].HRef);
@@ -205,9 +166,9 @@ namespace HalKit.Tests.Json
             [Fact]
             public void ShouldSerializeResourceEmbeddedProperties()
             {
+                var settingsWithResolver = CreateSettingsWithContractResolver();
                 // Deserialize and then serialize to get rid of all of the new lines
-                var expectedJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(FooResourceJson));
-                var converter = new ResourceConverter();
+                var expectedJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(FooResourceJson, settingsWithResolver));
 
                 var actualJson = JsonConvert.SerializeObject(
                                     new FooResource
@@ -224,11 +185,7 @@ namespace HalKit.Tests.Json
                                             new Link {HRef = "http://api.com/bars/2", Title = "Bar 2", IsTemplated = true},
                                         }
                                     },
-                                    new JsonSerializerSettings
-                                    {
-                                        Converters = new[] {converter},
-                                        Formatting = Formatting.None
-                                    });
+                                    settingsWithResolver);
 
                 Assert.Equal(expectedJson, actualJson);
             }

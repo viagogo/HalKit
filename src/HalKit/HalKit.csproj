@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="HalClient.cs" />
     <Compile Include="Json\RelAttribute.cs" />
+    <Compile Include="Json\ResourceContractResolver.cs" />
     <Compile Include="Models\Request\IRequestParameters.cs" />
     <Compile Include="Models\Response\Link.cs" />
     <Compile Include="Models\Response\Resource.cs" />
@@ -46,7 +47,6 @@
     <Compile Include="IHalClient.cs" />
     <Compile Include="Json\DefaultJsonSerializer.cs" />
     <Compile Include="Json\EmbeddedAttribute.cs" />
-    <Compile Include="Json\ResourceConverter.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="HalKitConfiguration.cs" />
     <Compile Include="Http\ApiResponse.cs" />
@@ -62,8 +62,6 @@
     </Compile>
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Requires.cs" />
-    <Compile Include="Utilities\LinkAndEmbeddedPropertiesLookup.cs" />
-    <Compile Include="Utilities\ThreadSafeStore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
