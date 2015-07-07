@@ -64,8 +64,15 @@ namespace HalKit.Json
                 }
             }
 
-            contractProperties.Add(CreateReservedHalJsonProperty(type, "_links", linksPropertyMap));
-            contractProperties.Add(CreateReservedHalJsonProperty(type, "_embedded", embeddedPropertyMap));
+            if (linksPropertyMap.Any())
+            {
+                contractProperties.Add(CreateReservedHalJsonProperty(type, "_links", linksPropertyMap));
+            }
+
+            if (embeddedPropertyMap.Any())
+            {
+                contractProperties.Add(CreateReservedHalJsonProperty(type, "_embedded", embeddedPropertyMap));
+            }
 
             return contractProperties;
         }
