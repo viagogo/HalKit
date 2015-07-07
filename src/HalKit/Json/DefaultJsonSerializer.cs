@@ -4,13 +4,25 @@ namespace HalKit.Json
 {
     public class DefaultJsonSerializer : IJsonSerializer
     {
-        private static readonly JsonSerializerSettings Settings
-            = new JsonSerializerSettings
+        private static JsonSerializerSettings _settings;
+        
+        private static JsonSerializerSettings Settings
+        {
+            get
             {
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                NullValueHandling = NullValueHandling.Ignore,
-                Converters = new[] { new ResourceConverter() }
-            };
+                if (_settings == null)
+                {
+                    _settings = new JsonSerializerSettings
+                                {
+                                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                                    NullValueHandling = NullValueHandling.Ignore,
+                                };
+                    _settings.ContractResolver = new ResourceContractResolver(_settings);
+                }
+
+                return _settings;
+            }
+        }
 
         public string Serialize(object value)
         {

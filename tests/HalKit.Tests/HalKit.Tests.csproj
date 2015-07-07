@@ -75,7 +75,7 @@
     <Compile Include="Http\ApiResponseFactoryTests.cs" />
     <Compile Include="Http\HttpClientFactoryTests.cs" />
     <Compile Include="Http\HttpConnectionTests.cs" />
-    <Compile Include="Json\ResourceConverterTests.cs" />
+    <Compile Include="Json\ResourceContractResolverTests.cs" />
     <Compile Include="Services\LinkResolverTests.cs" />
   </ItemGroup>
   <ItemGroup>
