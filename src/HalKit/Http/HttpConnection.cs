@@ -34,11 +34,11 @@ namespace HalKit.Http
                               IJsonSerializer jsonSerializer,
                               IApiResponseFactory responseFactory)
         {
-            Requires.ArgumentNotNull(handlers, "handlers");
-            Requires.ArgumentNotNull(configuration, "configuration");
-            Requires.ArgumentNotNull(httpClientFactory, "httpClientFactory");
-            Requires.ArgumentNotNull(jsonSerializer, "jsonSerializer");
-            Requires.ArgumentNotNull(responseFactory, "responseFactory");
+            Requires.ArgumentNotNull(handlers, nameof(handlers));
+            Requires.ArgumentNotNull(configuration, nameof(configuration));
+            Requires.ArgumentNotNull(httpClientFactory, nameof(httpClientFactory));
+            Requires.ArgumentNotNull(jsonSerializer, nameof(jsonSerializer));
+            Requires.ArgumentNotNull(responseFactory, nameof(responseFactory));
 
             _httpClient = httpClientFactory.CreateClient(handlers);
             _configuration = configuration;
@@ -52,8 +52,8 @@ namespace HalKit.Http
             object body,
             IDictionary<string, IEnumerable<string>> headers)
         {
-            Requires.ArgumentNotNull(uri, "uri");
-            Requires.ArgumentNotNull(method, "method");
+            Requires.ArgumentNotNull(uri, nameof(uri));
+            Requires.ArgumentNotNull(method, nameof(method));
 
             using (var request = new HttpRequestMessage {RequestUri = uri, Method = method})
             {

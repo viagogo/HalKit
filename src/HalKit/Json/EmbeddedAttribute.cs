@@ -19,7 +19,7 @@ namespace HalKit.Json
         /// <param name="rel"></param>
         public EmbeddedAttribute(string rel)
         {
-            Requires.ArgumentNotNull(rel, "rel");
+            Requires.ArgumentNotNull(rel, nameof(rel));
 
             _rel = rel;
         }

@@ -11,7 +11,7 @@ namespace HalKit.Services
     {
         public Uri ResolveLink(Link link, IDictionary<string, string> parameters)
         {
-            Requires.ArgumentNotNull(link, "link");
+            Requires.ArgumentNotNull(link, nameof(link));
 
             if (parameters == null || !parameters.Any())
             {

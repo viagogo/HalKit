@@ -11,7 +11,7 @@ namespace HalKit
 
         public HalKitConfiguration(Uri rootEndpoint)
         {
-            Requires.ArgumentNotNull(rootEndpoint, "rootEndpoint");
+            Requires.ArgumentNotNull(rootEndpoint, nameof(rootEndpoint));
 
             RootEndpoint = rootEndpoint;
         }

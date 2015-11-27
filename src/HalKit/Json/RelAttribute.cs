@@ -22,7 +22,7 @@ namespace HalKit.Json
         /// <param name="rel"></param>
         public RelAttribute(string rel)
         {
-            Requires.ArgumentNotNull(rel, "rel");
+            Requires.ArgumentNotNull(rel, nameof(rel));
 
             _rel = rel;
         }

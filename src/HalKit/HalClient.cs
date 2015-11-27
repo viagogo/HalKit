@@ -31,12 +31,12 @@ namespace HalKit
                          IHttpConnection httpConnection,
                          ILinkResolver linkResolver)
         {
-            Requires.ArgumentNotNull(httpConnection, "httpConnection");
-            Requires.ArgumentNotNull(configuration, "configuration");
-            Requires.ArgumentNotNull(linkResolver, "linkResolver");
+            Requires.ArgumentNotNull(httpConnection, nameof(httpConnection));
+            Requires.ArgumentNotNull(configuration, nameof(configuration));
+            Requires.ArgumentNotNull(linkResolver, nameof(linkResolver));
             if (configuration.RootEndpoint == null)
             {
-                throw new ArgumentException("configuration must have a RootEndpoint");
+                throw new ArgumentException($"{nameof(configuration)} must have a RootEndpoint");
             }
 
             _httpConnection = httpConnection;
@@ -59,7 +59,7 @@ namespace HalKit
         public Task<TRootResource> GetRootAsync<TRootResource>(IRequestParameters request)
             where TRootResource : Resource
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return GetRootAsync<TRootResource>(request.Parameters, request.Headers);
         }
@@ -87,7 +87,7 @@ namespace HalKit
 
         public Task<T> GetAsync<T>(Link link, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return GetAsync<T>(link, request.Parameters, request.Headers);
         }
@@ -117,7 +117,7 @@ namespace HalKit
 
         public Task<T> PostAsync<T>(Link link, object body, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return PostAsync<T>(link, body, request.Parameters, request.Headers);
         }
@@ -148,7 +148,7 @@ namespace HalKit
 
         public Task<T> PutAsync<T>(Link link, object body, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return PutAsync<T>(link, body, request.Parameters, request.Headers);
         }
@@ -179,7 +179,7 @@ namespace HalKit
 
         public Task<T> PatchAsync<T>(Link link, object body, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return PatchAsync<T>(link, body, request.Parameters, request.Headers);
         }
@@ -210,7 +210,7 @@ namespace HalKit
 
         public Task<IApiResponse> DeleteAsync(Link link, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return DeleteAsync(link, request.Parameters, request.Headers);
         }
@@ -257,8 +257,8 @@ namespace HalKit
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
         {
-            Requires.ArgumentNotNull(link, "link");
-            Requires.ArgumentNotNull(method, "method");
+            Requires.ArgumentNotNull(link, nameof(link));
+            Requires.ArgumentNotNull(method, nameof(method));
 
             headers = headers ?? new Dictionary<string, IEnumerable<string>>();
             if (!headers.ContainsKey("Accept"))
