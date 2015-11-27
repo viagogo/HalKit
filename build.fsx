@@ -4,7 +4,7 @@ open System
 open System.IO
 open Fake
 open Fake.AssemblyInfoFile
-open Fake.XUnit2Helper
+open Fake.Testing
 
 // Project information used to generate AssemblyInfo and .nuspec
 let projectName = "HalKit"
@@ -52,8 +52,7 @@ Target "UnitTests" (fun _ ->
     !! (buildDir + @"\HalKit*.Tests.dll")
     |> xUnit2 (fun p ->
         {p with
-            OutputDir = testResultsDir
-            HtmlOutput = true}
+            HtmlOutputPath = Some (testResultsDir @@ "xunit.html")}
     )
 )
 
