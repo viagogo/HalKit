@@ -21,6 +21,12 @@ bld/
 [Oo]bj/
 [Aa]rtifacts/
 
+# FAKE cache folder
+.fake/
+
+# Visual Studio cache directories
+.vs/
+
 # Roslyn cache directories
 *.ide/
 

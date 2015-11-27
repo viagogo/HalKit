@@ -13,8 +13,6 @@ namespace HalKit
     {
         private const string HalJsonMediaType = "application/hal+json";
 
-        private readonly IHttpConnection _httpConnection;
-        private readonly IHalKitConfiguration _configuration;
         private readonly ILinkResolver _linkResolver;
 
         public HalClient(IHalKitConfiguration configuration)
@@ -31,16 +29,16 @@ namespace HalKit
                          IHttpConnection httpConnection,
                          ILinkResolver linkResolver)
         {
-            Requires.ArgumentNotNull(httpConnection, "httpConnection");
-            Requires.ArgumentNotNull(configuration, "configuration");
-            Requires.ArgumentNotNull(linkResolver, "linkResolver");
+            Requires.ArgumentNotNull(httpConnection, nameof(httpConnection));
+            Requires.ArgumentNotNull(configuration, nameof(configuration));
+            Requires.ArgumentNotNull(linkResolver, nameof(linkResolver));
             if (configuration.RootEndpoint == null)
             {
-                throw new ArgumentException("configuration must have a RootEndpoint");
+                throw new ArgumentException($"{nameof(configuration)} must have a RootEndpoint");
             }
 
-            _httpConnection = httpConnection;
-            _configuration = configuration;
+            HttpConnection = httpConnection;
+            Configuration = configuration;
             _linkResolver = linkResolver;
         }
 
@@ -59,7 +57,7 @@ namespace HalKit
         public Task<TRootResource> GetRootAsync<TRootResource>(IRequestParameters request)
             where TRootResource : Resource
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return GetRootAsync<TRootResource>(request.Parameters, request.Headers);
         }
@@ -70,7 +68,7 @@ namespace HalKit
             where TRootResource : Resource
         {
             return GetAsync<TRootResource>(
-                new Link {HRef = _configuration.RootEndpoint.OriginalString},
+                new Link {HRef = Configuration.RootEndpoint.OriginalString},
                 parameters,
                 headers);
         }
@@ -87,7 +85,7 @@ namespace HalKit
 
         public Task<T> GetAsync<T>(Link link, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return GetAsync<T>(link, request.Parameters, request.Headers);
         }
@@ -117,7 +115,7 @@ namespace HalKit
 
         public Task<T> PostAsync<T>(Link link, object body, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return PostAsync<T>(link, body, request.Parameters, request.Headers);
         }
@@ -148,7 +146,7 @@ namespace HalKit
 
         public Task<T> PutAsync<T>(Link link, object body, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return PutAsync<T>(link, body, request.Parameters, request.Headers);
         }
@@ -179,7 +177,7 @@ namespace HalKit
 
         public Task<T> PatchAsync<T>(Link link, object body, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return PatchAsync<T>(link, body, request.Parameters, request.Headers);
         }
@@ -210,7 +208,7 @@ namespace HalKit
 
         public Task<IApiResponse> DeleteAsync(Link link, IRequestParameters request)
         {
-            Requires.ArgumentNotNull(request, "request");
+            Requires.ArgumentNotNull(request, nameof(request));
 
             return DeleteAsync(link, request.Parameters, request.Headers);
         }
@@ -229,15 +227,9 @@ namespace HalKit
             return response;
         }
 
-        public IHalKitConfiguration Configuration
-        {
-            get { return _configuration; }
-        }
+        public IHalKitConfiguration Configuration { get; }
 
-        public IHttpConnection HttpConnection
-        {
-            get { return _httpConnection; }
-        }
+        public IHttpConnection HttpConnection { get; }
 
         private async Task<T> SendRequestAndGetBodyAsync<T>(
             Link link,
@@ -257,8 +249,8 @@ namespace HalKit
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
         {
-            Requires.ArgumentNotNull(link, "link");
-            Requires.ArgumentNotNull(method, "method");
+            Requires.ArgumentNotNull(link, nameof(link));
+            Requires.ArgumentNotNull(method, nameof(method));
 
             headers = headers ?? new Dictionary<string, IEnumerable<string>>();
             if (!headers.ContainsKey("Accept"))
@@ -266,11 +258,11 @@ namespace HalKit
                 headers.Add("Accept", new[] { HalJsonMediaType });
             }
 
-            return await _httpConnection.SendRequestAsync<T>(
+            return await HttpConnection.SendRequestAsync<T>(
                         _linkResolver.ResolveLink(link, parameters),
                         method,
                         body,
-                        headers).ConfigureAwait(_configuration);
+                        headers).ConfigureAwait(Configuration);
         }
     }
 }

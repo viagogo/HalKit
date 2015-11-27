@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HalKit.Models;
 using HalKit.Models.Response;
 using Tavis.UriTemplates;
 
@@ -11,7 +10,7 @@ namespace HalKit.Services
     {
         public Uri ResolveLink(Link link, IDictionary<string, string> parameters)
         {
-            Requires.ArgumentNotNull(link, "link");
+            Requires.ArgumentNotNull(link, nameof(link));
 
             if (parameters == null || !parameters.Any())
             {

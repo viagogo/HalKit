@@ -12,8 +12,8 @@ namespace HalKit.Http
 
         public ApiResponseFactory(IJsonSerializer jsonSerializer, IHalKitConfiguration configuration)
         {
-            Requires.ArgumentNotNull(jsonSerializer, "jsonSerializer");
-            Requires.ArgumentNotNull(configuration, "configuration");
+            Requires.ArgumentNotNull(jsonSerializer, nameof(jsonSerializer));
+            Requires.ArgumentNotNull(configuration, nameof(configuration));
 
             _jsonSerializer = jsonSerializer;
             _configuration = configuration;

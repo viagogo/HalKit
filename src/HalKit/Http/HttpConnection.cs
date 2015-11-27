@@ -14,7 +14,6 @@ namespace HalKit.Http
     public class HttpConnection : IHttpConnection
     {
         private readonly HttpClient _httpClient;
-        private readonly IHalKitConfiguration _configuration;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IApiResponseFactory _responseFactory;
 
@@ -34,14 +33,14 @@ namespace HalKit.Http
                               IJsonSerializer jsonSerializer,
                               IApiResponseFactory responseFactory)
         {
-            Requires.ArgumentNotNull(handlers, "handlers");
-            Requires.ArgumentNotNull(configuration, "configuration");
-            Requires.ArgumentNotNull(httpClientFactory, "httpClientFactory");
-            Requires.ArgumentNotNull(jsonSerializer, "jsonSerializer");
-            Requires.ArgumentNotNull(responseFactory, "responseFactory");
+            Requires.ArgumentNotNull(handlers, nameof(handlers));
+            Requires.ArgumentNotNull(configuration, nameof(configuration));
+            Requires.ArgumentNotNull(httpClientFactory, nameof(httpClientFactory));
+            Requires.ArgumentNotNull(jsonSerializer, nameof(jsonSerializer));
+            Requires.ArgumentNotNull(responseFactory, nameof(responseFactory));
 
             _httpClient = httpClientFactory.CreateClient(handlers);
-            _configuration = configuration;
+            Configuration = configuration;
             _jsonSerializer = jsonSerializer;
             _responseFactory = responseFactory;
         }
@@ -52,8 +51,8 @@ namespace HalKit.Http
             object body,
             IDictionary<string, IEnumerable<string>> headers)
         {
-            Requires.ArgumentNotNull(uri, "uri");
-            Requires.ArgumentNotNull(method, "method");
+            Requires.ArgumentNotNull(uri, nameof(uri));
+            Requires.ArgumentNotNull(method, nameof(method));
 
             using (var request = new HttpRequestMessage {RequestUri = uri, Method = method})
             {
@@ -71,8 +70,8 @@ namespace HalKit.Http
                 }
                 request.Content = GetRequestContent(method, body, contentType);
 
-                var responseMessage = await _httpClient.SendAsync(request, CancellationToken.None).ConfigureAwait(_configuration);
-                return await _responseFactory.CreateApiResponseAsync<T>(responseMessage).ConfigureAwait(_configuration);
+                var responseMessage = await _httpClient.SendAsync(request, CancellationToken.None).ConfigureAwait(Configuration);
+                return await _responseFactory.CreateApiResponseAsync<T>(responseMessage).ConfigureAwait(Configuration);
             }
         }
 
@@ -86,9 +85,10 @@ namespace HalKit.Http
                 return null;
             }
 
-            if (body is HttpContent)
+            var bodyContent = body as HttpContent;
+            if (bodyContent != null)
             {
-                return body as HttpContent;
+                return bodyContent;
             }
 
             var bodyString = body as string;
@@ -110,9 +110,6 @@ namespace HalKit.Http
             return new StringContent(bodyJson, Encoding.UTF8, contentType);
         }
 
-        public IHalKitConfiguration Configuration
-        {
-            get { return _configuration; }
-        }
+        public IHalKitConfiguration Configuration { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace HalKit.Http
 
         public HttpClientFactory(HttpClientHandler clientHandler)
         {
-            Requires.ArgumentNotNull(clientHandler, "clientHandler");
+            Requires.ArgumentNotNull(clientHandler, nameof(clientHandler));
 
             if (clientHandler.SupportsAutomaticDecompression)
             {

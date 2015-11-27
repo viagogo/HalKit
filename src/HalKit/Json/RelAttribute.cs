@@ -13,8 +13,6 @@ namespace HalKit.Json
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class RelAttribute : Attribute
     {
-        private readonly string _rel;
-
         /// <summary>
         /// Initializes a new instances of a <see cref="RelAttribute"/>
         /// class with the given link relation.
@@ -22,17 +20,14 @@ namespace HalKit.Json
         /// <param name="rel"></param>
         public RelAttribute(string rel)
         {
-            Requires.ArgumentNotNull(rel, "rel");
+            Requires.ArgumentNotNull(rel, nameof(rel));
 
-            _rel = rel;
+            Rel = rel;
         }
 
         /// <summary>
         /// Gets the link relation of a link.
         /// </summary>
-        public string Rel
-        {
-            get { return _rel; }
-        }
+        public string Rel { get; }
     }
 }
