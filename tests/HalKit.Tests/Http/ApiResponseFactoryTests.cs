@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using HalKit.Http;
 using HalKit.Json;
 using Moq;
@@ -114,7 +113,7 @@ namespace HalKit.Tests.Http
                 mockSerializer.Verify(j => j.Deserialize<Foo>(It.IsAny<string>()), Times.Never());
             }
 
-            [Theory, MemberData("JsonContentTypes")]
+            [Theory, MemberData(nameof(JsonContentTypes))]
             public async void ShouldPassResponseContentStringToJsonSerializer_WhenResponseIsNotByteArray_AndContentTypeIsJson(
                 string jsonContentType)
             {
@@ -131,7 +130,7 @@ namespace HalKit.Tests.Http
                 mockSerializer.Verify();
             }
 
-            [Theory, MemberData("JsonContentTypes")]
+            [Theory, MemberData(nameof(JsonContentTypes))]
             public async void ShouldReturnApiResponseWithBodyAsObjectSetToResultDeserializedByTheJsonSerializer_WhenResponseIsNotByteArray_AndContentTypeIsJson(
                 string jsonContentType)
             {

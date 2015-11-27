@@ -10,8 +10,6 @@ namespace HalKit.Json
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class EmbeddedAttribute : Attribute
     {
-        private readonly string _rel;
-
         /// <summary>
         /// Initializes a new instances of a <see cref="EmbeddedAttribute"/>
         /// class with the given link relation.
@@ -21,15 +19,12 @@ namespace HalKit.Json
         {
             Requires.ArgumentNotNull(rel, nameof(rel));
 
-            _rel = rel;
+            Rel = rel;
         }
 
         /// <summary>
         /// Gets the link relation of an embedded resource.
         /// </summary>
-        public string Rel
-        {
-            get { return _rel; }
-        }
+        public string Rel { get; }
     }
 }

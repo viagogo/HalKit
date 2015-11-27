@@ -24,14 +24,8 @@ namespace HalKit.Json
             }
         }
 
-        public string Serialize(object value)
-        {
-            return JsonConvert.SerializeObject(value, Settings);
-        }
+        public string Serialize(object value) => JsonConvert.SerializeObject(value, Settings);
 
-        public T Deserialize<T>(string json)
-        {
-            return JsonConvert.DeserializeObject<T>(json, Settings);
-        }
+        public T Deserialize<T>(string json) => JsonConvert.DeserializeObject<T>(json, Settings);
     }
 }

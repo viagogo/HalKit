@@ -13,8 +13,6 @@ namespace HalKit
     {
         private const string HalJsonMediaType = "application/hal+json";
 
-        private readonly IHttpConnection _httpConnection;
-        private readonly IHalKitConfiguration _configuration;
         private readonly ILinkResolver _linkResolver;
 
         public HalClient(IHalKitConfiguration configuration)
@@ -39,8 +37,8 @@ namespace HalKit
                 throw new ArgumentException($"{nameof(configuration)} must have a RootEndpoint");
             }
 
-            _httpConnection = httpConnection;
-            _configuration = configuration;
+            HttpConnection = httpConnection;
+            Configuration = configuration;
             _linkResolver = linkResolver;
         }
 
@@ -70,7 +68,7 @@ namespace HalKit
             where TRootResource : Resource
         {
             return GetAsync<TRootResource>(
-                new Link {HRef = _configuration.RootEndpoint.OriginalString},
+                new Link {HRef = Configuration.RootEndpoint.OriginalString},
                 parameters,
                 headers);
         }
@@ -229,15 +227,9 @@ namespace HalKit
             return response;
         }
 
-        public IHalKitConfiguration Configuration
-        {
-            get { return _configuration; }
-        }
+        public IHalKitConfiguration Configuration { get; }
 
-        public IHttpConnection HttpConnection
-        {
-            get { return _httpConnection; }
-        }
+        public IHttpConnection HttpConnection { get; }
 
         private async Task<T> SendRequestAndGetBodyAsync<T>(
             Link link,
@@ -266,11 +258,11 @@ namespace HalKit
                 headers.Add("Accept", new[] { HalJsonMediaType });
             }
 
-            return await _httpConnection.SendRequestAsync<T>(
+            return await HttpConnection.SendRequestAsync<T>(
                         _linkResolver.ResolveLink(link, parameters),
                         method,
                         body,
-                        headers).ConfigureAwait(_configuration);
+                        headers).ConfigureAwait(Configuration);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using HalKit.Models;
 using HalKit.Models.Response;
 
 namespace HalKit.Services

@@ -89,7 +89,7 @@ namespace HalKit.Tests.Http
                 mockHttp.Verify();
             }
 
-            [Theory, MemberData("HttpMethods")]
+            [Theory, MemberData(nameof(HttpMethods))]
             public async void ShouldSendAnHttpRequestMessageWithTheGivenHttpMethod(HttpMethod expectedMethod)
             {
                 var mockHttp = new Mock<HttpClient>(MockBehavior.Loose);

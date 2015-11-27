@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HalKit.Models;
 using HalKit.Models.Response;
 using HalKit.Services;
 using Xunit;
