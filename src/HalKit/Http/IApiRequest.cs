@@ -11,6 +11,7 @@ namespace HalKit.Http
     {
         Uri Uri { get; set; }
         HttpMethod Method { get; set; }
+        IDictionary<string, IEnumerable<string>> Headers { get; set; }
         object Body { get; set; }
     }
 }

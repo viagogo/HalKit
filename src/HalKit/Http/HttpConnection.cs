@@ -76,11 +76,9 @@ namespace HalKit.Http
             }
         }
 
-        public Task<IApiResponse<T>> SendRequestAsync<T>(
-            IApiRequest apiRequest,
-            IDictionary<string, IEnumerable<string>> headers)
+        public Task<IApiResponse<T>> SendRequestAsync<T>(IApiRequest apiRequest)
         {
-            return SendRequestAsync<T>(apiRequest.Uri, apiRequest.Method, apiRequest.Body, headers);
+            return SendRequestAsync<T>(apiRequest.Uri, apiRequest.Method, apiRequest.Body, apiRequest.Headers);
         }
 
         private HttpContent GetRequestContent(
@@ -118,14 +116,7 @@ namespace HalKit.Http
             return new StringContent(bodyJson, Encoding.UTF8, contentType);
         }
 
-        public IHalKitConfiguration Configuration
-        {
-            get { return _configuration; }
-        }
-
-        public HttpClient Client
-        {
-            get { return _httpClient; }
-        }
+        public IHalKitConfiguration Configuration => _configuration;
+        public HttpClient Client => _httpClient;
     }
 }

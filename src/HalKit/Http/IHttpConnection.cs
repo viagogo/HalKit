@@ -13,9 +13,7 @@ namespace HalKit.Http
             object body,
             IDictionary<string, IEnumerable<string>> headers);
 
-        Task<IApiResponse<T>> SendRequestAsync<T>(
-            IApiRequest apiRequest,
-            IDictionary<string, IEnumerable<string>> headers);
+        Task<IApiResponse<T>> SendRequestAsync<T>(IApiRequest apiRequest);
 
         IHalKitConfiguration Configuration { get; }
         HttpClient Client { get; }
