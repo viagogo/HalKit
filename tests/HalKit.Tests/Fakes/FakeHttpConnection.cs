@@ -22,6 +22,12 @@ namespace HalKit.Tests.Fakes
             return Task.FromResult(response ?? new ApiResponse<T>());
         }
 
+        public Task<IApiResponse<T>> SendRequestAsync<T>(IApiRequest apiRequest, IDictionary<string, IEnumerable<string>> headers)
+        {
+            return SendRequestAsync<T>(apiRequest.Uri, apiRequest.Method, apiRequest.Body, headers);
+        }
+
         public IHalKitConfiguration Configuration { get; private set; }
+        public HttpClient Client { get; }
     }
 }

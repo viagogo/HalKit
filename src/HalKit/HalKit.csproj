@@ -35,6 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HalClient.cs" />
+    <Compile Include="Http\ApiRequest.cs" />
+    <Compile Include="Http\IApiRequest.cs" />
     <Compile Include="Json\RelAttribute.cs" />
     <Compile Include="Json\ResourceContractResolver.cs" />
     <Compile Include="Models\Request\IRequestParameters.cs" />

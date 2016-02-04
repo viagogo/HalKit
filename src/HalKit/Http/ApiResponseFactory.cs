@@ -30,7 +30,9 @@ namespace HalKit.Http
                     if (typeof(T) != typeof(byte[]))
                     {
                         body = await response.Content.ReadAsStringAsync().ConfigureAwait(_configuration);
-                        if (body != null && IsJsonContent(response.Content))
+                        if (body != null && 
+                            IsJsonContent(response.Content) && 
+                            response.IsSuccessStatusCode)
                         {
                             bodyAsObject = _jsonSerializer.Deserialize<T>(body);
                         }

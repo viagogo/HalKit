@@ -4,13 +4,13 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyProductAttribute("HalKit")]
 [assembly: AssemblyCompanyAttribute("viagogo")]
-[assembly: AssemblyCopyrightAttribute("Copyright viagogo 2015")]
-[assembly: AssemblyVersionAttribute("0.5.0")]
-[assembly: AssemblyFileVersionAttribute("0.5.0")]
-[assembly: AssemblyInformationalVersionAttribute("0.5.0")]
+[assembly: AssemblyCopyrightAttribute("Copyright viagogo 2016")]
+[assembly: AssemblyVersionAttribute("0.6.0")]
+[assembly: AssemblyFileVersionAttribute("0.6.0")]
+[assembly: AssemblyInformationalVersionAttribute("0.6.0")]
 [assembly: ComVisibleAttribute(false)]
 namespace System {
     internal static class AssemblyVersionInformation {
-        internal const string Version = "0.5.0";
+        internal const string Version = "0.6.0";
     }
 }

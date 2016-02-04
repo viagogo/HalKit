@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using HalKit.Http;
 using HalKit.Json;
 using Moq;
@@ -53,6 +52,23 @@ namespace HalKit.Tests.Http
                 var actualResponse = await factory.CreateApiResponseAsync<Foo>(new HttpResponseMessage());
 
                 Assert.Null(actualResponse.Body);
+                Assert.Null(actualResponse.BodyAsObject);
+            }
+
+            [Fact]
+            public async void ShouldReturnApiResponseWithNullBodyAsObject_WhenResponseStatusCodeIsNotSuccess()
+            {
+                var responseContent = new StringContent("{ \"id\": 1}");
+                var factory = CreateFactory();
+
+                var actualResponse = await factory
+                    .CreateApiResponseAsync<Foo>(new HttpResponseMessage
+                    {
+                        StatusCode = HttpStatusCode.NotFound,
+                        Content = responseContent
+                    });
+
+                Assert.NotNull(actualResponse.Body);
                 Assert.Null(actualResponse.BodyAsObject);
             }
 

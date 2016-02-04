@@ -76,6 +76,13 @@ namespace HalKit.Http
             }
         }
 
+        public Task<IApiResponse<T>> SendRequestAsync<T>(
+            IApiRequest apiRequest,
+            IDictionary<string, IEnumerable<string>> headers)
+        {
+            return SendRequestAsync<T>(apiRequest.Uri, apiRequest.Method, apiRequest.Body, headers);
+        }
+
         private HttpContent GetRequestContent(
             HttpMethod method,
             object body,
@@ -113,6 +120,11 @@ namespace HalKit.Http
         public IHalKitConfiguration Configuration
         {
             get { return _configuration; }
+        }
+
+        public HttpClient Client
+        {
+            get { return _httpClient; }
         }
     }
 }
