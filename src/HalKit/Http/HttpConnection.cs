@@ -14,6 +14,7 @@ namespace HalKit.Http
     public class HttpConnection : IHttpConnection
     {
         private readonly HttpClient _httpClient;
+        private readonly IHalKitConfiguration _configuration;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IApiResponseFactory _responseFactory;
 
@@ -40,7 +41,7 @@ namespace HalKit.Http
             Requires.ArgumentNotNull(responseFactory, nameof(responseFactory));
 
             _httpClient = httpClientFactory.CreateClient(handlers);
-            Configuration = configuration;
+            _configuration = configuration;
             _jsonSerializer = jsonSerializer;
             _responseFactory = responseFactory;
         }
@@ -73,6 +74,13 @@ namespace HalKit.Http
                 var responseMessage = await _httpClient.SendAsync(request, CancellationToken.None).ConfigureAwait(Configuration);
                 return await _responseFactory.CreateApiResponseAsync<T>(responseMessage).ConfigureAwait(Configuration);
             }
+        }
+
+        public Task<IApiResponse<T>> SendRequestAsync<T>(
+            IApiRequest apiRequest,
+            IDictionary<string, IEnumerable<string>> headers)
+        {
+            return SendRequestAsync<T>(apiRequest.Uri, apiRequest.Method, apiRequest.Body, headers);
         }
 
         private HttpContent GetRequestContent(
@@ -110,6 +118,14 @@ namespace HalKit.Http
             return new StringContent(bodyJson, Encoding.UTF8, contentType);
         }
 
-        public IHalKitConfiguration Configuration { get; }
+        public IHalKitConfiguration Configuration
+        {
+            get { return _configuration; }
+        }
+
+        public HttpClient Client
+        {
+            get { return _httpClient; }
+        }
     }
 }

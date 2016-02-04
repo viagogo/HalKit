@@ -1,3 +1,7 @@
+### New in 0.6.0 (Released 2015/02/04)
+* Update IHttpConnection to add Client property
+* Added IApiRequest
+
 ### New in 0.5.0 (Released 2015/07/07)
 * Started using ResourceContractResolver for serialization for an ~2x performance improvement
 
