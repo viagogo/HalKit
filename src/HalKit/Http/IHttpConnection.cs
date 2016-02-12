@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HalKit.Http
@@ -11,9 +12,10 @@ namespace HalKit.Http
             Uri uri,
             HttpMethod method,
             object body,
-            IDictionary<string, IEnumerable<string>> headers);
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken);
 
-        Task<IApiResponse<T>> SendRequestAsync<T>(IApiRequest apiRequest);
+        Task<IApiResponse<T>> SendRequestAsync<T>(IApiRequest apiRequest, CancellationToken cancellationToken);
 
         IHalKitConfiguration Configuration { get; }
         HttpClient Client { get; }

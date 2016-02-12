@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using HalKit.Http;
 using HalKit.Models.Response;
@@ -464,7 +465,8 @@ namespace HalKit.Tests
                                             It.IsAny<Uri>(),
                                             It.IsAny<HttpMethod>(),
                                             It.IsAny<object>(),
-                                            It.IsAny<IDictionary<string, IEnumerable<string>>>()))
+                                            It.IsAny<IDictionary<string, IEnumerable<string>>>(),
+                                            It.IsAny<CancellationToken>()))
                              .Returns(Task.FromResult<IApiResponse<object>>(expectedResponse))
                              .Verifiable();
                 var client = CreateClient(conn: mockConnection.Object);
@@ -517,7 +519,8 @@ namespace HalKit.Tests
                                         expectedUri,
                                         It.IsAny<HttpMethod>(),
                                         It.IsAny<object>(),
-                                        It.IsAny<IDictionary<string, IEnumerable<string>>>()))
+                                        It.IsAny<IDictionary<string, IEnumerable<string>>>(),
+                                        It.IsAny<CancellationToken>()))
                          .Returns(Task.FromResult<IApiResponse<T>>(new ApiResponse<T>()))
                          .Verifiable();
             var client = CreateClient(resolver: mockResolver.Object, conn: mockConnection.Object);
@@ -536,7 +539,8 @@ namespace HalKit.Tests
                                         It.IsAny<Uri>(),
                                         expectedMethod,
                                         It.IsAny<object>(),
-                                        It.IsAny<IDictionary<string, IEnumerable<string>>>()))
+                                        It.IsAny<IDictionary<string, IEnumerable<string>>>(),
+                                        It.IsAny<CancellationToken>()))
                          .Returns(Task.FromResult<IApiResponse<T>>(new ApiResponse<T>()))
                          .Verifiable();
             var client = CreateClient(conn: mockConnection.Object);
@@ -555,7 +559,8 @@ namespace HalKit.Tests
                                         It.IsAny<Uri>(),
                                         It.IsAny<HttpMethod>(),
                                         expectedBody,
-                                        It.IsAny<IDictionary<string, IEnumerable<string>>>()))
+                                        It.IsAny<IDictionary<string, IEnumerable<string>>>(),
+                                        It.IsAny<CancellationToken>()))
                          .Returns(Task.FromResult<IApiResponse<T>>(new ApiResponse<T>()))
                          .Verifiable();
             var client = CreateClient(conn: mockConnection.Object);
@@ -575,8 +580,9 @@ namespace HalKit.Tests
                                         It.IsAny<Uri>(),
                                         It.IsAny<HttpMethod>(),
                                         It.IsAny<object>(),
-                                        It.IsAny<IDictionary<string, IEnumerable<string>>>()))
-                         .Callback((Uri uri, HttpMethod method, object body, IDictionary<string, IEnumerable<string>> headers) =>
+                                        It.IsAny<IDictionary<string, IEnumerable<string>>>(),
+                                        It.IsAny<CancellationToken>()))
+                         .Callback((Uri uri, HttpMethod method, object body, IDictionary<string, IEnumerable<string>> headers, CancellationToken token) =>
                             actualHeaders = headers)
                          .Returns(Task.FromResult<IApiResponse<T>>(new ApiResponse<T>()));
             var client = CreateClient(conn: mockConnection.Object);
@@ -597,8 +603,9 @@ namespace HalKit.Tests
                                         It.IsAny<Uri>(),
                                         It.IsAny<HttpMethod>(),
                                         It.IsAny<object>(),
-                                        It.IsAny<IDictionary<string, IEnumerable<string>>>()))
-                         .Callback((Uri uri, HttpMethod method, object body, IDictionary<string, IEnumerable<string>> headers) =>
+                                        It.IsAny<IDictionary<string, IEnumerable<string>>>(),
+                                        It.IsAny<CancellationToken>()))
+                         .Callback((Uri uri, HttpMethod method, object body, IDictionary<string, IEnumerable<string>> headers, CancellationToken token) =>
                             actualHeaders = headers)
                          .Returns(Task.FromResult<IApiResponse<T>>(new ApiResponse<T>()));
             var client = CreateClient(conn: mockConnection.Object);
@@ -623,7 +630,8 @@ namespace HalKit.Tests
                                         It.IsAny<Uri>(),
                                         It.IsAny<HttpMethod>(),
                                         It.IsAny<object>(),
-                                        It.IsAny<IDictionary<string, IEnumerable<string>>>()))
+                                        It.IsAny<IDictionary<string, IEnumerable<string>>>(),
+                                        It.IsAny<CancellationToken>()))
                          .Returns(Task.FromResult<IApiResponse<T>>(new ApiResponse<T> { BodyAsObject = expectedResponse }));
             var client = CreateClient(conn: mockConnection.Object);
 

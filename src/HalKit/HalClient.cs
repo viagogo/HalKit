@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using HalKit.Http;
 using HalKit.Models.Request;
@@ -262,7 +263,8 @@ namespace HalKit
                         _linkResolver.ResolveLink(link, parameters),
                         method,
                         body,
-                        headers).ConfigureAwait(Configuration);
+                        headers,
+                        CancellationToken.None).ConfigureAwait(Configuration);
         }
     }
 }
