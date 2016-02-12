@@ -58,9 +58,17 @@ namespace HalKit
         public Task<TRootResource> GetRootAsync<TRootResource>(IRequestParameters request)
             where TRootResource : Resource
         {
+            return GetRootAsync<TRootResource>(request, CancellationToken.None);
+        }
+
+        public Task<TRootResource> GetRootAsync<TRootResource>(
+            IRequestParameters request,
+            CancellationToken cancellationToken)
+            where TRootResource : Resource
+        {
             Requires.ArgumentNotNull(request, nameof(request));
 
-            return GetRootAsync<TRootResource>(request.Parameters, request.Headers);
+            return GetRootAsync<TRootResource>(request.Parameters, request.Headers, cancellationToken);
         }
 
         public Task<TRootResource> GetRootAsync<TRootResource>(
@@ -68,10 +76,19 @@ namespace HalKit
             IDictionary<string, IEnumerable<string>> headers)
             where TRootResource : Resource
         {
+            return GetRootAsync<TRootResource>(parameters, headers, CancellationToken.None);
+        }
+
+        public Task<TRootResource> GetRootAsync<TRootResource>(
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken) where TRootResource : Resource
+        {
             return GetAsync<TRootResource>(
-                new Link {HRef = Configuration.RootEndpoint.OriginalString},
+                new Link { HRef = Configuration.RootEndpoint.OriginalString },
                 parameters,
-                headers);
+                headers,
+                cancellationToken);
         }
 
         public Task<T> GetAsync<T>(Link link)
@@ -86,9 +103,14 @@ namespace HalKit
 
         public Task<T> GetAsync<T>(Link link, IRequestParameters request)
         {
+            return GetAsync<T>(link, request, CancellationToken.None);
+        }
+
+        public Task<T> GetAsync<T>(Link link, IRequestParameters request, CancellationToken cancellationToken)
+        {
             Requires.ArgumentNotNull(request, nameof(request));
 
-            return GetAsync<T>(link, request.Parameters, request.Headers);
+            return GetAsync<T>(link, request.Parameters, request.Headers, cancellationToken);
         }
 
         public Task<T> GetAsync<T>(
@@ -96,12 +118,22 @@ namespace HalKit
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
         {
+            return GetAsync<T>(link, parameters, headers, CancellationToken.None);
+        }
+
+        public Task<T> GetAsync<T>(
+            Link link,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
+        {
             return SendRequestAndGetBodyAsync<T>(
                 link,
                 HttpMethod.Get,
                 null,
                 parameters,
-                headers);
+                headers,
+                cancellationToken);
         }
 
         public Task<T> PostAsync<T>(Link link, object body)
@@ -116,9 +148,14 @@ namespace HalKit
 
         public Task<T> PostAsync<T>(Link link, object body, IRequestParameters request)
         {
+            return PostAsync<T>(link, body, request, CancellationToken.None);
+        }
+
+        public Task<T> PostAsync<T>(Link link, object body, IRequestParameters request, CancellationToken cancellationToken)
+        {
             Requires.ArgumentNotNull(request, nameof(request));
 
-            return PostAsync<T>(link, body, request.Parameters, request.Headers);
+            return PostAsync<T>(link, body, request.Parameters, request.Headers, cancellationToken);
         }
 
         public Task<T> PostAsync<T>(
@@ -127,12 +164,23 @@ namespace HalKit
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
         {
+            return PostAsync<T>(link, body, parameters, headers, CancellationToken.None);
+        }
+
+        public Task<T> PostAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
+        {
             return SendRequestAndGetBodyAsync<T>(
                 link,
                 HttpMethod.Post,
                 body,
                 parameters,
-                headers);
+                headers,
+                cancellationToken);
         }
 
         public Task<T> PutAsync<T>(Link link, object body)
@@ -147,9 +195,14 @@ namespace HalKit
 
         public Task<T> PutAsync<T>(Link link, object body, IRequestParameters request)
         {
+            return PutAsync<T>(link, body, request, CancellationToken.None);
+        }
+
+        public Task<T> PutAsync<T>(Link link, object body, IRequestParameters request, CancellationToken cancellationToken)
+        {
             Requires.ArgumentNotNull(request, nameof(request));
 
-            return PutAsync<T>(link, body, request.Parameters, request.Headers);
+            return PutAsync<T>(link, body, request.Parameters, request.Headers, cancellationToken);
         }
 
         public Task<T> PutAsync<T>(
@@ -158,12 +211,23 @@ namespace HalKit
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
         {
+            return PutAsync<T>(link, body, parameters, headers, CancellationToken.None);
+        }
+
+        public Task<T> PutAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
+        {
             return SendRequestAndGetBodyAsync<T>(
                 link,
                 HttpMethod.Put,
                 body,
                 parameters,
-                headers);
+                headers,
+                cancellationToken);
         }
 
         public Task<T> PatchAsync<T>(Link link, object body)
@@ -178,9 +242,14 @@ namespace HalKit
 
         public Task<T> PatchAsync<T>(Link link, object body, IRequestParameters request)
         {
+            return PatchAsync<T>(link, body, request, CancellationToken.None);
+        }
+
+        public Task<T> PatchAsync<T>(Link link, object body, IRequestParameters request, CancellationToken cancellationToken)
+        {
             Requires.ArgumentNotNull(request, nameof(request));
 
-            return PatchAsync<T>(link, body, request.Parameters, request.Headers);
+            return PatchAsync<T>(link, body, request.Parameters, request.Headers, cancellationToken);
         }
 
         public Task<T> PatchAsync<T>(
@@ -189,12 +258,23 @@ namespace HalKit
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
         {
+            return PatchAsync<T>(link, body, parameters, headers, CancellationToken.None);
+        }
+
+        public Task<T> PatchAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
+        {
             return SendRequestAndGetBodyAsync<T>(
                 link,
                 new HttpMethod("Patch"),
                 body,
                 parameters,
-                headers);
+                headers,
+                cancellationToken);
         }
 
         public Task<IApiResponse> DeleteAsync(Link link)
@@ -209,22 +289,37 @@ namespace HalKit
 
         public Task<IApiResponse> DeleteAsync(Link link, IRequestParameters request)
         {
+            return DeleteAsync(link, request, CancellationToken.None);
+        }
+
+        public Task<IApiResponse> DeleteAsync(Link link, IRequestParameters request, CancellationToken cancellationToken)
+        {
             Requires.ArgumentNotNull(request, nameof(request));
 
-            return DeleteAsync(link, request.Parameters, request.Headers);
+            return DeleteAsync(link, request.Parameters, request.Headers, cancellationToken);
+        }
+
+        public Task<IApiResponse> DeleteAsync(
+            Link link,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers)
+        {
+            return DeleteAsync(link, parameters, headers, CancellationToken.None);
         }
 
         public async Task<IApiResponse> DeleteAsync(
             Link link,
             IDictionary<string, string> parameters,
-            IDictionary<string, IEnumerable<string>> headers)
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
         {
             var response = await SendRequestAsync<object>(
-                            link,
-                            HttpMethod.Delete,
-                            null,
-                            parameters,
-                            headers);
+                                    link,
+                                    HttpMethod.Delete,
+                                    null,
+                                    parameters,
+                                    headers,
+                                    cancellationToken).ConfigureAwait(Configuration);
             return response;
         }
 
@@ -237,9 +332,16 @@ namespace HalKit
             HttpMethod method,
             object body,
             IDictionary<string, string> parameters,
-            IDictionary<string, IEnumerable<string>> headers)
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
         {
-            var response = await SendRequestAsync<T>(link, method, body, parameters, headers);
+            var response = await SendRequestAsync<T>(
+                                    link,
+                                    method,
+                                    body,
+                                    parameters,
+                                    headers,
+                                    cancellationToken).ConfigureAwait(Configuration);
             return response.BodyAsObject;
         }
 
@@ -248,7 +350,8 @@ namespace HalKit
             HttpMethod method,
             object body,
             IDictionary<string, string> parameters,
-            IDictionary<string, IEnumerable<string>> headers)
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
         {
             Requires.ArgumentNotNull(link, nameof(link));
             Requires.ArgumentNotNull(method, nameof(method));
@@ -264,7 +367,7 @@ namespace HalKit
                         method,
                         body,
                         headers,
-                        CancellationToken.None).ConfigureAwait(Configuration);
+                        cancellationToken).ConfigureAwait(Configuration);
         }
     }
 }
