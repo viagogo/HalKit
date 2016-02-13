@@ -1,4 +1,7 @@
-### New in 0.6.0 (Released 2015/02/04)
+### New in 0.7.0 (Released 2016/02/12)
+* IHalClient and IHttpConnection now support cancellation
+
+### New in 0.6.0 (Released 2016/02/04)
 * Update IHttpConnection to add Client property
 * Added IApiRequest
 

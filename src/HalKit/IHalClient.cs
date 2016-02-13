@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using HalKit.Http;
 using HalKit.Models.Request;
@@ -16,9 +17,18 @@ namespace HalKit
         Task<TRootResource> GetRootAsync<TRootResource>(IRequestParameters request)
              where TRootResource : Resource;
 
+        Task<TRootResource> GetRootAsync<TRootResource>(IRequestParameters request, CancellationToken cancellationToken)
+             where TRootResource : Resource;
+
         Task<TRootResource> GetRootAsync<TRootResource>(
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers)
+             where TRootResource : Resource;
+
+        Task<TRootResource> GetRootAsync<TRootResource>(
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
              where TRootResource : Resource;
 
         Task<T> GetAsync<T>(Link link);
@@ -27,10 +37,18 @@ namespace HalKit
 
         Task<T> GetAsync<T>(Link link, IRequestParameters request);
 
+        Task<T> GetAsync<T>(Link link, IRequestParameters request, CancellationToken cancellationToken);
+
         Task<T> GetAsync<T>(
             Link link,
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers);
+
+        Task<T> GetAsync<T>(
+            Link link,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken);
 
         Task<T> PostAsync<T>(Link link, object body);
 
@@ -44,8 +62,21 @@ namespace HalKit
         Task<T> PostAsync<T>(
             Link link,
             object body,
+            IRequestParameters request,
+            CancellationToken cancellationToken);
+
+        Task<T> PostAsync<T>(
+            Link link,
+            object body,
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers);
+
+        Task<T> PostAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken);
 
         Task<T> PutAsync<T>(Link link, object body);
 
@@ -59,8 +90,21 @@ namespace HalKit
         Task<T> PutAsync<T>(
             Link link,
             object body,
+            IRequestParameters request,
+            CancellationToken cancellationToken);
+
+        Task<T> PutAsync<T>(
+            Link link,
+            object body,
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers);
+
+        Task<T> PutAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken);
 
         Task<T> PatchAsync<T>(Link link, object body);
 
@@ -74,8 +118,21 @@ namespace HalKit
         Task<T> PatchAsync<T>(
             Link link,
             object body,
+            IRequestParameters request,
+            CancellationToken cancellationToken);
+
+        Task<T> PatchAsync<T>(
+            Link link,
+            object body,
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers);
+
+        Task<T> PatchAsync<T>(
+            Link link,
+            object body,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken);
 
         Task<IApiResponse> DeleteAsync(Link link);
 
@@ -83,10 +140,18 @@ namespace HalKit
 
         Task<IApiResponse> DeleteAsync(Link link, IRequestParameters request);
 
+        Task<IApiResponse> DeleteAsync(Link link, IRequestParameters request, CancellationToken cancellationToken);
+
         Task<IApiResponse> DeleteAsync(
             Link link,
             IDictionary<string, string> parameters,
             IDictionary<string, IEnumerable<string>> headers);
+
+        Task<IApiResponse> DeleteAsync(
+            Link link,
+            IDictionary<string, string> parameters,
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken);
 
         IHalKitConfiguration Configuration { get; }
 

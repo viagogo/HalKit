@@ -84,7 +84,27 @@ namespace HalKit.Tests.Http
                         .Verifiable();
                 var conn = CreateConnection(httpFact: new FakeHttpClientFactory(http: mockHttp.Object));
 
-                await conn.SendRequestAsync<string>(expectedUri, HttpMethod.Trace, null, null);
+                await conn.SendRequestAsync<string>(expectedUri, HttpMethod.Trace, null, null, CancellationToken.None);
+
+                mockHttp.Verify();
+            }
+
+            [Fact]
+            public async void ShouldSendAnHttpRequestMessageWithTheGivenCancellationToken()
+            {
+                var expectedCancellationToken = new CancellationToken(true);
+                var mockHttp = new Mock<HttpClient>(MockBehavior.Loose);
+                mockHttp.Setup(h => h.SendAsync(It.IsAny<HttpRequestMessage>(), expectedCancellationToken))
+                        .Returns(Task.FromResult(new HttpResponseMessage()))
+                        .Verifiable();
+                var conn = CreateConnection(httpFact: new FakeHttpClientFactory(http: mockHttp.Object));
+
+                await conn.SendRequestAsync<string>(
+                    new Uri("https://api.vgg.io"),
+                    HttpMethod.Trace,
+                    null,
+                    null,
+                    expectedCancellationToken);
 
                 mockHttp.Verify();
             }
@@ -99,7 +119,12 @@ namespace HalKit.Tests.Http
                         .Verifiable();
                 var conn = CreateConnection(httpFact: new FakeHttpClientFactory(http: mockHttp.Object));
 
-                await conn.SendRequestAsync<string>(new Uri("https://api.vgg.io"), expectedMethod, null, null);
+                await conn.SendRequestAsync<string>(
+                    new Uri("https://api.vgg.io"),
+                    expectedMethod,
+                    null,
+                    null,
+                    CancellationToken.None);
 
                 mockHttp.Verify();
             }
@@ -124,7 +149,8 @@ namespace HalKit.Tests.Http
                     new Dictionary<string, IEnumerable<string>>
                     {
                         {expectedHeaderKey, expectedHeaderValues}
-                    });
+                    },
+                    CancellationToken.None);
 
                 Assert.Equal(expectedHeaderValues, actualHeaderValues);
             }
@@ -146,7 +172,8 @@ namespace HalKit.Tests.Http
                     new Dictionary<string, IEnumerable<string>>
                     {
                         {"Content-Type", new[] {"application/json"}}
-                    });
+                    },
+                    CancellationToken.None);
 
                 mockHttp.Verify();
             }
@@ -170,7 +197,8 @@ namespace HalKit.Tests.Http
                     new Dictionary<string, IEnumerable<string>>
                     {
                         {"Content-Type", new[] {"application/json"}}
-                    });
+                    },
+                    CancellationToken.None);
 
                 Assert.Same(expectedContent, actualContent);
             }
@@ -190,7 +218,8 @@ namespace HalKit.Tests.Http
                     new Uri("https://api.io"),
                     HttpMethod.Put,
                     "{}",
-                    null);
+                    null,
+                    CancellationToken.None);
 
                 Assert.IsType<StringContent>(actualContent);
             }
@@ -210,7 +239,8 @@ namespace HalKit.Tests.Http
                     new Uri("https://api.io"),
                     HttpMethod.Put,
                     "{}",
-                    null);
+                    null,
+                    CancellationToken.None);
 
                 Assert.Equal("application/hal+json", actualContent.Headers.ContentType.MediaType);
             }
@@ -227,7 +257,8 @@ namespace HalKit.Tests.Http
                     new Uri("https://api.io"),
                     HttpMethod.Put,
                     expectedBody,
-                    null);
+                    null,
+                    CancellationToken.None);
 
                 mockSerializer.Verify();
             }
@@ -247,7 +278,8 @@ namespace HalKit.Tests.Http
                     new Uri("https://api.io"),
                     HttpMethod.Put,
                     new object(),
-                    null);
+                    null,
+                    CancellationToken.None);
 
                 Assert.IsType<StringContent>(actualContent);
             }
@@ -267,7 +299,8 @@ namespace HalKit.Tests.Http
                     new Uri("https://api.io"),
                     HttpMethod.Put,
                     new object(),
-                    null);
+                    null,
+                    CancellationToken.None);
 
                 Assert.Equal("application/hal+json", actualContent.Headers.ContentType.MediaType);
             }
@@ -290,7 +323,8 @@ namespace HalKit.Tests.Http
                     new Uri("https://api.vgg.io"),
                     HttpMethod.Get,
                     null,
-                    null);
+                    null,
+                    CancellationToken.None);
 
                 mockRespFact.Verify();
             }
@@ -305,7 +339,8 @@ namespace HalKit.Tests.Http
                                             new Uri("https://api.vgg.io"),
                                             HttpMethod.Get,
                                             null,
-                                            null);
+                                            null,
+                                            CancellationToken.None);
 
                 Assert.Same(expectedApiResponse, actualApiResponse);
             }

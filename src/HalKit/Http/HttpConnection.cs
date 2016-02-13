@@ -50,7 +50,8 @@ namespace HalKit.Http
             Uri uri,
             HttpMethod method,
             object body,
-            IDictionary<string, IEnumerable<string>> headers)
+            IDictionary<string, IEnumerable<string>> headers,
+            CancellationToken cancellationToken)
         {
             Requires.ArgumentNotNull(uri, nameof(uri));
             Requires.ArgumentNotNull(method, nameof(method));
@@ -71,14 +72,14 @@ namespace HalKit.Http
                 }
                 request.Content = GetRequestContent(method, body, contentType);
 
-                var responseMessage = await _httpClient.SendAsync(request, CancellationToken.None).ConfigureAwait(Configuration);
+                var responseMessage = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(Configuration);
                 return await _responseFactory.CreateApiResponseAsync<T>(responseMessage).ConfigureAwait(Configuration);
             }
         }
 
-        public Task<IApiResponse<T>> SendRequestAsync<T>(IApiRequest apiRequest)
+        public Task<IApiResponse<T>> SendRequestAsync<T>(IApiRequest apiRequest, CancellationToken cancellationToken)
         {
-            return SendRequestAsync<T>(apiRequest.Uri, apiRequest.Method, apiRequest.Body, apiRequest.Headers);
+            return SendRequestAsync<T>(apiRequest.Uri, apiRequest.Method, apiRequest.Body, apiRequest.Headers, cancellationToken);
         }
 
         private HttpContent GetRequestContent(
