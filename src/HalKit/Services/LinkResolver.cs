@@ -40,7 +40,7 @@ namespace HalKit.Services
             }
 
             var parametersWithValues = parameters.Where(kv => !string.IsNullOrEmpty(kv.Value));
-            var parametersQueryString = string.Join("&", parametersWithValues.Select(kv => kv.Key + "=" + WebUtility.UrlEncode(kv.Value)));
+            var parametersQueryString = string.Join("&", parametersWithValues.Select(kv => kv.Key + "=" + Uri.EscapeDataString(kv.Value)));
             uriBuilder.Query = existingQueryParameters + parametersQueryString;
             return uriBuilder.Uri;
         }
