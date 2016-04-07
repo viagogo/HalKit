@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using HalKit.Models.Response;
 using Tavis.UriTemplates;
 
@@ -39,7 +40,7 @@ namespace HalKit.Services
             }
 
             var parametersWithValues = parameters.Where(kv => !string.IsNullOrEmpty(kv.Value));
-            var parametersQueryString = string.Join("&", parametersWithValues.Select(kv => kv.Key + "=" + kv.Value));
+            var parametersQueryString = string.Join("&", parametersWithValues.Select(kv => kv.Key + "=" + Uri.EscapeDataString(kv.Value)));
             uriBuilder.Query = existingQueryParameters + parametersQueryString;
             return uriBuilder.Uri;
         }

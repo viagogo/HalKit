@@ -22,6 +22,7 @@ namespace HalKit.Tests.Services
 
             [Theory]
             // Non-templated Examples
+            [InlineData("http://host.com/path", false, "filter=at&t;bar=value", "http://host.com/path?filter=at%26t&bar=value")]
             [InlineData("http://host.com/path", false, null, "http://host.com/path")]
             [InlineData("http://host.com/path", false, "", "http://host.com/path")]
             [InlineData("http://host.com/path", false, "foo=foovalue;bar=barvalue", "http://host.com/path?foo=foovalue&bar=barvalue")]
