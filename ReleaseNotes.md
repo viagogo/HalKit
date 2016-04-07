@@ -1,3 +1,6 @@
+### New in 0.5.1 (Released 2016-04-07)
+* UrlEncoding request parameters
+
 ### New in 0.5.0 (Released 2015/07/07)
 * Started using ResourceContractResolver for serialization for an ~2x performance improvement
 
