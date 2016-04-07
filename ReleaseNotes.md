@@ -1,3 +1,6 @@
+### New in 0.7.1 (Released 2016/04/07)
+* UrlEncoding request parameters
+
 ### New in 0.7.0 (Released 2016/02/12)
 * IHalClient and IHttpConnection now support cancellation
 
