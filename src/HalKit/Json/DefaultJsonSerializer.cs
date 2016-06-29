@@ -15,6 +15,7 @@ namespace HalKit.Json
                     _settings = new JsonSerializerSettings
                                 {
                                     DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                                    DateParseHandling = DateParseHandling.None,
                                     NullValueHandling = NullValueHandling.Ignore,
                                 };
                     _settings.ContractResolver = new ResourceContractResolver(_settings);
