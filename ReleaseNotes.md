@@ -1,3 +1,6 @@
+### New in 0.7.2 (Released 2016/04/07)
+* Default serializer date parse handling to None
+
 ### New in 0.7.1 (Released 2016/04/07)
 * UrlEncoding request parameters
 
