@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProductAttribute("HalKit")]
 [assembly: AssemblyCompanyAttribute("viagogo")]
 [assembly: AssemblyCopyrightAttribute("Copyright viagogo 2016")]
-[assembly: AssemblyVersionAttribute("0.7.2")]
-[assembly: AssemblyFileVersionAttribute("0.7.2")]
-[assembly: AssemblyInformationalVersionAttribute("0.7.2")]
+[assembly: AssemblyVersionAttribute("0.7.3")]
+[assembly: AssemblyFileVersionAttribute("0.7.3")]
+[assembly: AssemblyInformationalVersionAttribute("0.7.3")]
 [assembly: ComVisibleAttribute(false)]
 namespace System {
     internal static class AssemblyVersionInformation {
-        internal const string Version = "0.7.2";
+        internal const string Version = "0.7.3";
     }
 }

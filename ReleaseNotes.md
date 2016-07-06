@@ -1,3 +1,7 @@
+### New in 0.7.3 (Released 2016/07/06)
+* Inject json serializer to HttpConnection
+* Make Self link virtual
+
 ### New in 0.7.2 (Released 2016/04/07)
 * Default serializer date parse handling to None
 
