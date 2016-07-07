@@ -22,9 +22,19 @@ namespace HalKit.Http
                               IHalKitConfiguration configuration)
             : this(handlers,
                    configuration,
+                   new DefaultJsonSerializer())
+        {
+        }
+
+        public HttpConnection(
+            IEnumerable<DelegatingHandler> handlers,
+            IHalKitConfiguration configuration,
+            IJsonSerializer jsonSerializer)
+            : this(handlers,
+                   configuration,
                    new HttpClientFactory(),
-                   new DefaultJsonSerializer(),
-                   new ApiResponseFactory(new DefaultJsonSerializer(), configuration))
+                   jsonSerializer,
+                   new ApiResponseFactory(jsonSerializer, configuration))
         {
         }
 

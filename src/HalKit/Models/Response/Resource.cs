@@ -13,6 +13,6 @@ namespace HalKit.Models.Response
         /// A <see cref="Link"/> representing the URI of a <see cref="Resource"/>.
         /// </summary>
         [Rel("self")]
-        public Link SelfLink { get; set; }
+        public virtual Link SelfLink { get; set; }
     }
 }
