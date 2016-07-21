@@ -1,7 +1,6 @@
 # HalKit - HAL API Client & Server Library for .NET
 
 [![NuGet version](https://badge.fury.io/nu/halkit.svg)][nuget]
-[![Downloads](https://img.shields.io/nuget/dt/halkit.svg)][nuget]
 [![Build status](https://ci.appveyor.com/api/projects/status/h9y4iv2ewqama4qw/branch/master?svg=true)][appveyor]
 
 [nuget]: http://www.nuget.org/packages/HalKit
