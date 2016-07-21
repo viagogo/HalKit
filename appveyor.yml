@@ -17,7 +17,7 @@ build_script:
   - dotnet build tests\HalKit.Tests\project.json --configuration %configuration% --framework net451
 
 test_script:
-  - dotnet test tests\HalKit.Tests\project.json --verbose
+  - dotnet test tests\HalKit.Tests\project.json
 
 #deploy:
 #  - provider: NuGet
