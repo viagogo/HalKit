@@ -1,0 +1,6 @@
+{
+    "projects": [
+        "src/HalKit",
+        "tests/HalKit.Tests"
+    ]
+}
