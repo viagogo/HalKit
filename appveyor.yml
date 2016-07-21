@@ -44,5 +44,5 @@ test_script:
 #  disable_publish_on_pr: true
 
 artifacts:
-  - path: src\HalKit\bin\%configuration%\*.nupkg
+  - path: src\HalKit\bin\$(configuration)\*.nupkg
     name: Packages
