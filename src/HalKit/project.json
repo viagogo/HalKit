@@ -1,6 +1,7 @@
 ﻿{
     "version": "0.7.3",
     "authors": [ "viagogo" ],
+    "copyright": "viagogo 2016",
     "title": "HalKit",
     "description": "A lightweight .NET library for creating and consuming HAL hypermedia APIs",
     "buildOptions": {
@@ -30,7 +31,7 @@
         }
     },
     "frameworks": {
-        "netstandard11": {
+        "netstandard12": {
             "dependencies": {
                 "NETStandard.Library": "1.6.0",
                 "System.Net.Http": "4.1.0",
