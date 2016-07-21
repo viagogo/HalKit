@@ -13,8 +13,8 @@ configuration:
 
 
 build_script:
-  - dotnet pack src\HalKit\project.json --configuration %configuration% --output out_bin --verbose
-  - dotnet build tests\HalKit.Tests\project.json --configuration %configuration% --output out_tests --framework net451 --verbose
+  - dotnet pack src\HalKit\project.json --configuration %configuration% --output out_bin
+  - dotnet build tests\HalKit.Tests\project.json --configuration %configuration% --output out_tests --framework net451
 
 test_script:
   - dotnet test tests\HalKit.Tests\project.json --verbose
