@@ -19,30 +19,32 @@ build_script:
 test_script:
   - dotnet test tests\HalKit.Tests\project.json
 
-#deploy:
-#  - provider: NuGet
-#    api_key:
-#      secure: op0ZZ3Hco6aF361F2tmCFCHe9lmLkB5P6CjYOwvSmL11DFjDsyqCEEH4LK7mDbLV
-#    artifact: /.*\.nupkg/
-#    on:
-#      branch: master
-#      appveyor_repo_tag: true
-#
-#  - provider: GitHub
-#    release: $(APPVEYOR_REPO_TAG_NAME)
-#    auth_token:
-#      secure: KkZc/MtbfhwnJ7sfv74IFidwvYQmKLlmrO9yp4ydi30A+0XAP9c5frqd6f6PEZ7J
-#    artifact: /.*\.nupkg/
-#    draft: false
-#    prerelease: false
-#    on:
-#      branch: master
-#      appveyor_repo_tag: true
+deploy:
+  - provider: NuGet
+    api_key:
+      secure: op0ZZ3Hco6aF361F2tmCFCHe9lmLkB5P6CjYOwvSmL11DFjDsyqCEEH4LK7mDbLV
+    artifact: HalKitPackages
+    on:
+      configuration: release
+      branch: master
+      appveyor_repo_tag: true
 
-#nuget:
-#  project_feed: true
-#  disable_publish_on_pr: true
+  - provider: GitHub
+    release: $(APPVEYOR_REPO_TAG_NAME)
+    auth_token:
+      secure: KkZc/MtbfhwnJ7sfv74IFidwvYQmKLlmrO9yp4ydi30A+0XAP9c5frqd6f6PEZ7J
+    artifact: HalKitPackages
+    draft: false
+    prerelease: false
+    on:
+      configuration: release
+      branch: master
+      appveyor_repo_tag: true
+
+nuget:
+  project_feed: true
+  disable_publish_on_pr: true
 
 artifacts:
   - path: src\HalKit\bin\$(configuration)\*.nupkg
-    name: Packages
+    name: HalKitPackages
