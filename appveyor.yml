@@ -4,6 +4,7 @@ init:
   - git config --global core.autocrlf input
 
 before_build:
+  - dotnet --info
   - dotnet restore
 
 configuration:
@@ -12,11 +13,11 @@ configuration:
 
 
 build_script:
-  - dotnet pack src\HalKit\project.json --configuration %configuration% --output out_bin
-  - dotnet build tests\HalKit.Tests\project.json --configuration %configuration% --output out_tests --framework net451
+  - dotnet pack src\HalKit\project.json --configuration %configuration% --output out_bin --verbose
+  - dotnet build tests\HalKit.Tests\project.json --configuration %configuration% --output out_tests --framework net451 --verbose
 
 test_script:
-  - dotnet test tests\HalKit.Tests\project.json
+  - dotnet test tests\HalKit.Tests\project.json --verbose
 
 #deploy:
 #  - provider: NuGet
