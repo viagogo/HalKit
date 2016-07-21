@@ -19,9 +19,9 @@ namespace HalKit.Http
         {
             Requires.ArgumentNotNull(clientHandler, nameof(clientHandler));
 
-            if (clientHandler.SupportsAutomaticDecompression)
+            if (!clientHandler.SupportsAutomaticDecompression)
             {
-                clientHandler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                clientHandler.AutomaticDecompression = DecompressionMethods.None;
             }
             _clientHandler = clientHandler;
         }
