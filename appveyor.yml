@@ -43,5 +43,5 @@ test_script:
 #  disable_publish_on_pr: true
 
 artifacts:
-  - path: artifacts\packages\*.nupkg
+  - path: out_bin\*.nupkg
     name: Packages
