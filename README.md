@@ -82,5 +82,5 @@ request. Thanks!
 
 ## Need Help? Found a bug?
 
-Just [submit a issue][submitanissue] if you need any help. And, of course, feel
+Just [submit a issue](https://github.com/viagogo/HalKit/issues) if you need any help. And, of course, feel
 free to submit pull requests with bug fixes or changes.
