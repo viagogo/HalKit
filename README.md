@@ -65,6 +65,7 @@ foreach (var order in ordersResource.Orders)
 
 ## Supported Platforms
 
+* .NET Core
 * .NET 4.5 (Desktop / Server)
 * Windows 8 / 8.1 Store Apps
 * Windows Phone 8 / 8.1
