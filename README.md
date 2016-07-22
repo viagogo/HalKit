@@ -1,7 +1,6 @@
 # HalKit - HAL API Client & Server Library for .NET
 
 [![NuGet version](https://badge.fury.io/nu/halkit.svg)][nuget]
-[![Downloads](https://img.shields.io/nuget/dt/halkit.svg)][nuget]
 [![Build status](https://ci.appveyor.com/api/projects/status/h9y4iv2ewqama4qw/branch/master?svg=true)][appveyor]
 
 [nuget]: http://www.nuget.org/packages/HalKit
@@ -66,6 +65,7 @@ foreach (var order in ordersResource.Orders)
 
 ## Supported Platforms
 
+* .NET Core
 * .NET 4.5 (Desktop / Server)
 * Windows 8 / 8.1 Store Apps
 * Windows Phone 8 / 8.1
@@ -82,5 +82,5 @@ request. Thanks!
 
 ## Need Help? Found a bug?
 
-Just [submit a issue][submitanissue] if you need any help. And, of course, feel
+Just [submit a issue](https://github.com/viagogo/HalKit/issues) if you need any help. And, of course, feel
 free to submit pull requests with bug fixes or changes.

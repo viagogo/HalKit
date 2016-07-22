@@ -1,0 +1,22 @@
+{
+    "testRunner": "xunit",
+
+    "dependencies": {
+        "dotnet-test-xunit": "2.2.0-preview2-build1029",
+        "HalKit": "0.7.3",
+        "xunit": "2.2.0-beta2-build3300"
+    },
+
+    "buildOptions": {
+        "platform": "anycpu"
+    },
+
+    "frameworks": {
+        "net451": {
+            "dependencies": {
+                "Microsoft.NETCore.Platforms": "1.0.1",
+                "Moq": "4.5.16"
+            }
+        }
+    }
+}

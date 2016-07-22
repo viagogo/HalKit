@@ -1,21 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalKit", "src\HalKit\HalKit.csproj", "{F1F25B20-C342-4F94-8029-11586B75D1F2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalKit.Tests", "tests\HalKit.Tests\HalKit.Tests.csproj", "{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{9FB3931E-F359-4C16-BCE9-0665921FB510}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
-		build.cmd = build.cmd
-		build.fsx = build.fsx
-		build.sh = build.sh
-		HalKit.nuspec = HalKit.nuspec
+		global.json = global.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{EC8D73FD-F133-45AE-8602-D0B453C5B41A}"
@@ -25,20 +18,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{EC8D73FD-F
 		ReleaseNotes.md = ReleaseNotes.md
 	EndProjectSection
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HalKit", "src\HalKit\HalKit.xproj", "{969D91D9-B84E-448C-A369-DE304B33C8A6}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HalKit.Tests", "tests\HalKit.Tests\HalKit.Tests.xproj", "{7C63619D-C81B-4BA9-B7B3-D57B1D682830}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F1F25B20-C342-4F94-8029-11586B75D1F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1F25B20-C342-4F94-8029-11586B75D1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1F25B20-C342-4F94-8029-11586B75D1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1F25B20-C342-4F94-8029-11586B75D1F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{969D91D9-B84E-448C-A369-DE304B33C8A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{969D91D9-B84E-448C-A369-DE304B33C8A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{969D91D9-B84E-448C-A369-DE304B33C8A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{969D91D9-B84E-448C-A369-DE304B33C8A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C63619D-C81B-4BA9-B7B3-D57B1D682830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C63619D-C81B-4BA9-B7B3-D57B1D682830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C63619D-C81B-4BA9-B7B3-D57B1D682830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C63619D-C81B-4BA9-B7B3-D57B1D682830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
