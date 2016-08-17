@@ -7,10 +7,10 @@ namespace HalKit.Http
     {
         public ApiResponse()
         {
-            Headers = new Dictionary<string, string>();
+            Headers = new Dictionary<string, IEnumerable<string>>();
         }
 
-        public IDictionary<string, string> Headers { get; }
+        public IDictionary<string, IEnumerable<string>> Headers { get; set; }
 
         public HttpStatusCode StatusCode { get; set; }
         public string Body { get; set; }

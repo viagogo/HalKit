@@ -10,7 +10,7 @@ namespace HalKit.Http
 
     public interface IApiResponse
     {
-        IDictionary<string, string> Headers { get; }
+        IDictionary<string, IEnumerable<string>> Headers { get; }
         HttpStatusCode StatusCode { get; }
         string Body { get; }
     }

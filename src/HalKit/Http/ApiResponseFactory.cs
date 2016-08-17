@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HalKit.Json;
@@ -23,6 +24,7 @@ namespace HalKit.Http
         {
             string body = null;
             object bodyAsObject = null;
+            var responseHttpHeaders = response.Headers.ToList();
             using (var content = response.Content)
             {
                 if (content != null)
@@ -41,6 +43,8 @@ namespace HalKit.Http
                     {
                         bodyAsObject = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(_configuration);
                     }
+
+                    responseHttpHeaders.AddRange(content.Headers);
                 }
             }
 
@@ -48,21 +52,11 @@ namespace HalKit.Http
             {
                 StatusCode = response.StatusCode,
                 Body = body,
-                BodyAsObject = (T)bodyAsObject,
+                BodyAsObject = (T) bodyAsObject,
+                Headers = responseHttpHeaders
+                            .GroupBy(kv => kv.Key, kv => kv.Value)
+                            .ToDictionary(grp => grp.Key, grp => grp.SelectMany(i => i.ToList()).ToList().AsEnumerable())
             };
-
-            foreach (var header in response.Headers)
-            {
-                apiResponse.Headers.Add(header.Key, header.Value.FirstOrDefault());
-            }
-
-            if (response.Content != null)
-            {
-                foreach (var header in response.Content.Headers)
-                {
-                    apiResponse.Headers.Add(header.Key, header.Value.FirstOrDefault());
-                }
-            }
 
             return apiResponse;
         }
