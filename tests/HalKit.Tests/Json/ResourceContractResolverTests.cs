@@ -42,46 +42,48 @@ namespace HalKit.Tests.Json
     }
   },
   ""_embedded"": {
-    ""docs:some_resource"": {
-      ""message"": ""Expected embedded message""
-    },
-    ""docs:foo_2"":{""normal_property"": {
-    ""property_one"": ""one"",
-    ""property_two"": [
-      2,
-      3
-    ]
-  },
-  ""_links"": {
-    ""self"": {
-      ""href"": ""http://api.com/self"",
-      ""title"": ""Self"",
-      ""templated"": false
-    },
-    ""docs:bars"": [
-      {
-        ""href"": ""http://api.com/bars/1"",
-        ""title"": ""Bar 1"",
-        ""templated"": false
+    ""docs:foo_2"":{
+      ""normal_property"": {
+        ""property_one"": ""one"",
+        ""property_two"": [
+          2,
+          3
+        ]
       },
-      {
-        ""href"": ""http://api.com/bars/2"",
-        ""title"": ""Bar 2"",
-        ""templated"": true
+      ""_links"": {
+        ""self"": {
+          ""href"": ""http://api.com/self"",
+          ""title"": ""Self"",
+          ""templated"": false
+        },
+        ""docs:bars"": [
+          {
+            ""href"": ""http://api.com/bars/1"",
+            ""title"": ""Bar 1"",
+            ""templated"": false
+          },
+          {
+            ""href"": ""http://api.com/bars/2"",
+            ""title"": ""Bar 2"",
+            ""templated"": true
+          }
+        ],
+        ""docs:some_resource"": {
+          ""href"": ""http://api.com/resources/5"",
+          ""title"": ""Some Resource"",
+          ""templated"": true
+        }
+      },
+      ""_embedded"": {
+        ""docs:some_resource"": {
+          ""message"": ""Expected embedded message""
+        }
       }
-    ],
-    ""docs:some_resource"": {
-      ""href"": ""http://api.com/resources/5"",
-      ""title"": ""Some Resource"",
-      ""templated"": true
-    }
-  },
-  ""_embedded"": {
+      },
     ""docs:some_resource"": {
       ""message"": ""Expected embedded message""
     }
-  }
-  }}
+    }
 }";
         public class FooResource : Resource
         {
@@ -102,7 +104,7 @@ namespace HalKit.Tests.Json
 
             [Rel("docs:bars")]
             public IList<Link> LinkArrayProperty { get; set; }
-            
+
             [Embedded("docs:foo_2")]
             public Foo2Resource Foo2Resource { get; set; }
         }
@@ -130,7 +132,7 @@ namespace HalKit.Tests.Json
 
         private static JsonSerializerSettings CreateSettingsWithContractResolver(Formatting formatting = Formatting.None)
         {
-            var settings = new JsonSerializerSettings {Formatting = formatting};
+            var settings = new JsonSerializerSettings { Formatting = formatting };
             settings.ContractResolver = new ResourceContractResolver(settings);
 
             return settings;
@@ -229,22 +231,47 @@ namespace HalKit.Tests.Json
                 var settingsWithResolver = CreateSettingsWithContractResolver();
                 // Deserialize and then serialize to get rid of all of the new lines
                 var expectedJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(FooResourceJson, settingsWithResolver));
+                var resource = new FooResource
+                {
+                    NormalProperty = new { property_one = "one", property_two = new[] { 2, 3 } },
+                    EmbeddedProperty = new { message = "Expected embedded message" },
+                    NullEmbeddedProperty = null,
+                    SelfLink = new Link { HRef = "http://api.com/self", Title = "Self", IsTemplated = false },
+                    LinkProperty = new Link
+                    {
+                        HRef = "http://api.com/resources/5",
+                        Title = "Some Resource",
+                        IsTemplated = true
+                    },
+                    NullLinkProperty = null,
+                    LinkArrayProperty = new[]
+                    {
+                        new Link {HRef = "http://api.com/bars/1", Title = "Bar 1", IsTemplated = false},
+                        new Link {HRef = "http://api.com/bars/2", Title = "Bar 2", IsTemplated = true},
+                    },
+                    Foo2Resource = new Foo2Resource
+                    {
+                        NormalProperty = new { property_one = "one", property_two = new[] { 2, 3 } },
+                        EmbeddedProperty = new { message = "Expected embedded message" },
+                        NullEmbeddedProperty = null,
+                        SelfLink = new Link { HRef = "http://api.com/self", Title = "Self", IsTemplated = false },
+                        LinkProperty = new Link
+                        {
+                            HRef = "http://api.com/resources/5",
+                            Title = "Some Resource",
+                            IsTemplated = true
+                        },
+                        NullLinkProperty = null,
+                        LinkArrayProperty = new[]
+                        {
+                            new Link {HRef = "http://api.com/bars/1", Title = "Bar 1", IsTemplated = false},
+                            new Link {HRef = "http://api.com/bars/2", Title = "Bar 2", IsTemplated = true},
+                        }
+                    }
+                };
 
                 var actualJson = JsonConvert.SerializeObject(
-                                    new FooResource
-                                    {
-                                        NormalProperty = new { property_one = "one", property_two = new[] { 2, 3 }},
-                                        EmbeddedProperty = new { message = "Expected embedded message" },
-                                        NullEmbeddedProperty = null,
-                                        SelfLink = new Link { HRef = "http://api.com/self", Title = "Self", IsTemplated = false },
-                                        LinkProperty = new Link { HRef = "http://api.com/resources/5", Title = "Some Resource", IsTemplated = true },
-                                        NullLinkProperty = null,
-                                        LinkArrayProperty = new[]
-                                        {
-                                            new Link {HRef = "http://api.com/bars/1", Title = "Bar 1", IsTemplated = false},
-                                            new Link {HRef = "http://api.com/bars/2", Title = "Bar 2", IsTemplated = true},
-                                        }
-                                    },
+                                    resource,
                                     settingsWithResolver);
 
                 Assert.Equal(expectedJson, actualJson);
