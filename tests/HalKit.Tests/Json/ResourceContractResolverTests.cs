@@ -44,10 +44,70 @@ namespace HalKit.Tests.Json
   ""_embedded"": {
     ""docs:some_resource"": {
       ""message"": ""Expected embedded message""
+    },
+    ""docs:foo_2"":{""normal_property"": {
+    ""property_one"": ""one"",
+    ""property_two"": [
+      2,
+      3
+    ]
+  },
+  ""_links"": {
+    ""self"": {
+      ""href"": ""http://api.com/self"",
+      ""title"": ""Self"",
+      ""templated"": false
+    },
+    ""docs:bars"": [
+      {
+        ""href"": ""http://api.com/bars/1"",
+        ""title"": ""Bar 1"",
+        ""templated"": false
+      },
+      {
+        ""href"": ""http://api.com/bars/2"",
+        ""title"": ""Bar 2"",
+        ""templated"": true
+      }
+    ],
+    ""docs:some_resource"": {
+      ""href"": ""http://api.com/resources/5"",
+      ""title"": ""Some Resource"",
+      ""templated"": true
+    }
+  },
+  ""_embedded"": {
+    ""docs:some_resource"": {
+      ""message"": ""Expected embedded message""
     }
   }
+  }}
 }";
         public class FooResource : Resource
+        {
+            [JsonProperty(PropertyName = "normal_property")]
+            public dynamic NormalProperty { get; set; }
+
+            [Embedded("docs:some_resource")]
+            public dynamic EmbeddedProperty { get; set; }
+
+            [Embedded("docs:not_in_json")]
+            public object NullEmbeddedProperty { get; set; }
+
+            [Rel("docs:some_resource")]
+            public Link LinkProperty { get; set; }
+
+            [Rel("docs:not_in_json")]
+            public Link NullLinkProperty { get; set; }
+
+            [Rel("docs:bars")]
+            public IList<Link> LinkArrayProperty { get; set; }
+            
+            [Embedded("docs:foo_2")]
+            public Foo2Resource Foo2Resource { get; set; }
+        }
+
+        public class Foo2Resource : Resource
         {
             [JsonProperty(PropertyName = "normal_property")]
             public dynamic NormalProperty { get; set; }
