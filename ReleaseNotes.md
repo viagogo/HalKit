@@ -1,11 +1,8 @@
 *** New in 0.10 (Released 05/09/2018)
 * Upgrade packages to netstandard
 
-*** New in 0.9 (Released 13/04/2018)
+### New in 0.9 (Released 13/04/2018)
 * Optimized the ResourceContractResolver to cache by type
-
-### New in 0.8 (Released 17/08/2016)
-* Modified IApiResponse.Headers to allow for multiple values
 
 ### New in 0.8 (Released 17/08/2016)
 * Modified IApiResponse.Headers to allow for multiple values

@@ -14,6 +14,9 @@ namespace HalKit.Json
     /// </summary>
     public class ResourceContractResolver : DefaultContractResolver
     {
+        private static readonly Dictionary<Type, IList<JsonProperty>> ContractPropertiesByType
+            = new Dictionary<Type, IList<JsonProperty>>();
+
         private readonly JsonSerializerSettings _settings;
 
         /// <summary>
@@ -33,48 +36,63 @@ namespace HalKit.Json
                 return allProperties;
             }
 
-            var contractProperties = new List<JsonProperty>();
-            var embeddedPropertyMap = new Dictionary<string, JsonProperty>();
-            var linksPropertyMap = new Dictionary<string, JsonProperty>();
-            foreach (var property in allProperties)
+            IList<JsonProperty> props;
+            if (!ContractPropertiesByType.TryGetValue(type, out props))
             {
-                var isLinkOrEmbeddedProperty = false;
-                var attributes = property.AttributeProvider.GetAttributes(false);
-                foreach (var attribute in attributes)
+                var contractProperties = new List<JsonProperty>();
+                var embeddedPropertyMap = new Dictionary<string, JsonProperty>();
+                var linksPropertyMap = new Dictionary<string, JsonProperty>();
+                foreach (var property in allProperties)
                 {
-                    var embeddedAttribute = attribute as EmbeddedAttribute;
-                    if (embeddedAttribute != null)
+                    var isLinkOrEmbeddedProperty = false;
+                    var attributes = property.AttributeProvider.GetAttributes(false);
+                    foreach (var attribute in attributes)
                     {
-                        isLinkOrEmbeddedProperty = true;
-                        embeddedPropertyMap.Add(embeddedAttribute.Rel, property);
+                        var embeddedAttribute = attribute as EmbeddedAttribute;
+                        if (embeddedAttribute != null)
+                        {
+                            isLinkOrEmbeddedProperty = true;
+                            embeddedPropertyMap.Add(embeddedAttribute.Rel, property);
+                        }
+
+                        var relAttribute = attribute as RelAttribute;
+                        if (relAttribute != null)
+                        {
+                            isLinkOrEmbeddedProperty = true;
+                            linksPropertyMap.Add(relAttribute.Rel, property);
+                        }
                     }
 
-                    var relAttribute = attribute as RelAttribute;
-                    if (relAttribute != null)
+                    // This doesn't have a Rel or Embedded attribute so it's just a normal property
+                    if (!isLinkOrEmbeddedProperty)
                     {
-                        isLinkOrEmbeddedProperty = true;
-                        linksPropertyMap.Add(relAttribute.Rel, property);
+                        contractProperties.Add(property);
                     }
                 }
 
-                // This doesn't have a Rel or Embedded attribute so it's just a normal property
-                if (!isLinkOrEmbeddedProperty)
+                if (linksPropertyMap.Any())
                 {
-                    contractProperties.Add(property);
+                    contractProperties.Add(CreateReservedHalJsonProperty(type, "_links", linksPropertyMap));
+                }
+
+                if (embeddedPropertyMap.Any())
+                {
+                    contractProperties.Add(CreateReservedHalJsonProperty(type, "_embedded", embeddedPropertyMap));
+                }
+                
+                if (!ContractPropertiesByType.TryGetValue(type, out props))
+                {
+                    lock (ContractPropertiesByType)
+                    {
+                        if (!ContractPropertiesByType.TryGetValue(type, out props))
+                        {
+                            ContractPropertiesByType.Add(type, contractProperties);
+                            props = contractProperties;
+                        }
+                    }
                 }
             }
-
-            if (linksPropertyMap.Any())
-            {
-                contractProperties.Add(CreateReservedHalJsonProperty(type, "_links", linksPropertyMap));
-            }
-
-            if (embeddedPropertyMap.Any())
-            {
-                contractProperties.Add(CreateReservedHalJsonProperty(type, "_embedded", embeddedPropertyMap));
-            }
-
-            return contractProperties;
+            return props;
         }
 
         private JsonProperty CreateReservedHalJsonProperty(
