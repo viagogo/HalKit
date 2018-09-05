@@ -15,7 +15,7 @@ before_build:
 build_script:
   - cmd: dotnet build --configuration release ./src/HalKit/HalKit.csproj
 
-test:    
+test_script:    
   - cmd: dotnet test ./tests/HalKit.Tests/HalKit.Tests.csproj
 
 deploy:
