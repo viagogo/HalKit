@@ -43,5 +43,5 @@ nuget:
   disable_publish_on_pr: true
 
 artifacts:
-  - path:.\src\HalKit\bin\release\*.nupkg
+  - path: '.\src\HalKit\bin\release\*.nupkg'
     name: Packages
