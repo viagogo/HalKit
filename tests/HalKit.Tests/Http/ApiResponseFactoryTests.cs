@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -26,7 +27,7 @@ namespace HalKit.Tests.Http
 
         public class TheCreateApiResponseAsyncMethod
         {
-            public static readonly object[] JsonContentTypes =
+            public static readonly List<object[]> JsonContentTypes = new List<object[]>
             {
                 new object[] {"application/hal+json"},
                 new object[] {"application/json"},

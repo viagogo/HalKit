@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <VersionPrefix>0.9</VersionPrefix>
+    <VersionSuffix>
+    </VersionSuffix>
+  </PropertyGroup>
+</Project>
