@@ -7,9 +7,6 @@
 ### New in 0.8 (Released 17/08/2016)
 * Modified IApiResponse.Headers to allow for multiple values
 
-### New in 0.8 (Released 17/08/2016)
-* Modified IApiResponse.Headers to allow for multiple values
-
 ### New in 0.7.3 (Released 2016/07/06)
 * Inject json serializer to HttpConnection
 * Make Self link virtual
