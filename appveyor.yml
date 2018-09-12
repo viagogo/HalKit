@@ -1,4 +1,4 @@
-os: Visual Studio 2015
+os: Visual Studio 2017
 
 version: 1.0.{build}.{branch}
 
@@ -6,12 +6,17 @@ init:
   - git config --global core.autocrlf input
 
 install:
-  - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH
+  # Install repo specific stuff here
+before_build:
+  - cmd: dotnet --version
+
+  - cmd: dotnet restore ./src/HalKit/HalKit.csproj --verbosity m
 
 build_script:
-  - cmd: build.cmd CreatePackage
+  - cmd: dotnet build --configuration release ./src/HalKit/HalKit.csproj
 
-test: off
+test_script:    
+  - cmd: dotnet test ./tests/HalKit.Tests/HalKit.Tests.csproj
 
 deploy:
   - provider: NuGet
@@ -38,5 +43,5 @@ nuget:
   disable_publish_on_pr: true
 
 artifacts:
-  - path: artifacts\packages\*.nupkg
+  - path: '.\src\HalKit\bin\release\*.nupkg'
     name: Packages

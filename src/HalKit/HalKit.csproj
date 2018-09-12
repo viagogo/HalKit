@@ -1,98 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{F1F25B20-C342-4F94-8029-11586B75D1F2}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>HalKit</RootNamespace>
-    <AssemblyName>HalKit</AssemblyName>
-    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
-    <NuGetPackageImportStamp>fa7b93b1</NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Debug\HalKit.XML</DocumentationFile>
-    <LangVersion>6</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\HalKit.XML</DocumentationFile>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10</AssetTargetFallback>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/viagogo/HalKit</PackageProjectUrl>
+    <RepositoryUrl></RepositoryUrl>
+    <Company>viagogo</Company>
+    <Copyright>Copyright viagogo 2018</Copyright>
+    <Authors>viagogo</Authors>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/viagogo/HalKit/master/LICENSE.txt</PackageLicenseUrl>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="HalClient.cs" />
-    <Compile Include="Http\ApiRequest.cs" />
-    <Compile Include="Http\IApiRequest.cs" />
-    <Compile Include="Json\RelAttribute.cs" />
-    <Compile Include="Json\ResourceContractResolver.cs" />
-    <Compile Include="Models\Request\IRequestParameters.cs" />
-    <Compile Include="Models\Response\Link.cs" />
-    <Compile Include="Models\Response\Resource.cs" />
-    <Compile Include="Services\ILinkResolver.cs" />
-    <Compile Include="Services\LinkResolver.cs" />
-    <Compile Include="Http\HttpConnection.cs" />
-    <Compile Include="Http\IHttpConnection.cs" />
-    <Compile Include="IHalClient.cs" />
-    <Compile Include="Json\DefaultJsonSerializer.cs" />
-    <Compile Include="Json\EmbeddedAttribute.cs" />
-    <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="HalKitConfiguration.cs" />
-    <Compile Include="Http\ApiResponse.cs" />
-    <Compile Include="Http\ApiResponseFactory.cs" />
-    <Compile Include="Http\IApiResponse.cs" />
-    <Compile Include="Http\IApiResponseFactory.cs" />
-    <Compile Include="Http\IHttpClientFactory.cs" />
-    <Compile Include="IHalKitConfiguration.cs" />
-    <Compile Include="Json\IJsonSerializer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\..\SolutionInfo.cs">
-      <Link>Properties\SolutionInfo.cs</Link>
-    </Compile>
-    <Compile Include="Http\HttpClientFactory.cs" />
-    <Compile Include="Requires.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <ItemGroup>
-    <None Include="packages.config" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Tavis.UriTemplates" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="Tavis.UriTemplates">
-      <HintPath>..\..\packages\Tavis.UriTemplates.0.6.2\lib\portable-net45+sl5+wp8+win8+wpa81+MonoTouch1+MonoAndroid1\Tavis.UriTemplates.dll</HintPath>
-    </Reference>
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
-  </Target>
+
+  <Import Project="..\..\version.props" />
 </Project>

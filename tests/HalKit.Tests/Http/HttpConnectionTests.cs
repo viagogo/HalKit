@@ -62,7 +62,7 @@ namespace HalKit.Tests.Http
 
         public class TheSendRequestAsyncMethod
         {
-            public static object[] HttpMethods =
+            public static List<object[]> HttpMethods = new List<object[]>
             {
                 new object[] {HttpMethod.Trace},
                 new object[] {HttpMethod.Put},

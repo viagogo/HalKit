@@ -1,3 +1,6 @@
+### New in 1.0 (Released 05/09/2018)
+* Upgrade packages to netstandard
+
 ### New in 0.9 (Released 13/04/2018)
 * Optimized the ResourceContractResolver to cache by type
 
