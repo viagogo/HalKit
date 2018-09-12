@@ -7,7 +7,7 @@
 [nuget]: http://www.nuget.org/packages/HalKit
 [appveyor]: https://ci.appveyor.com/project/viagogo/halkit/branch/master
 
-HalKit is a lightweight library, targeting .NET 4.5 and above, that provides an easy way to interact with [HAL][hal] hypermedia APIs.
+HalKit is a lightweight library, targeting .NET 4.6.1 and above, that provides an easy way to interact with [HAL][hal] hypermedia APIs.
 
 [hal]: http://stateless.co/hal_specification.html
 
@@ -66,7 +66,7 @@ foreach (var order in ordersResource.Orders)
 
 ## Supported Platforms
 
-* .NET 4.5 (Desktop / Server)
+* .NET 4.6.1 (Desktop / Server)
 * Windows 8 / 8.1 Store Apps
 * Windows Phone 8 / 8.1
 * Xamarin.iOS / Xamarin.Android / Xamarin.Mac
