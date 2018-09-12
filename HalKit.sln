@@ -3,16 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalKit", "src\HalKit\HalKit.csproj", "{F1F25B20-C342-4F94-8029-11586B75D1F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalKit", "src\HalKit\HalKit.csproj", "{F1F25B20-C342-4F94-8029-11586B75D1F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalKit.Tests", "tests\HalKit.Tests\HalKit.Tests.csproj", "{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalKit.Tests", "tests\HalKit.Tests\HalKit.Tests.csproj", "{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{9FB3931E-F359-4C16-BCE9-0665921FB510}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
-		HalKit.nuspec = HalKit.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{EC8D73FD-F133-45AE-8602-D0B453C5B41A}"

@@ -3,6 +3,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10</AssetTargetFallback>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/viagogo/HalKit</PackageProjectUrl>
+    <RepositoryUrl></RepositoryUrl>
+    <Company>viagogo</Company>
+    <Copyright>Copyright viagogo 2018</Copyright>
+    <Authors>viagogo</Authors>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/viagogo/HalKit/master/LICENSE.txt</PackageLicenseUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
