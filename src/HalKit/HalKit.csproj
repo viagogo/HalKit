@@ -9,6 +9,7 @@
     <Copyright>Copyright viagogo 2018</Copyright>
     <Authors>viagogo</Authors>
     <PackageLicenseUrl>https://raw.githubusercontent.com/viagogo/HalKit/master/LICENSE.txt</PackageLicenseUrl>
+    <Description>HalKit is a lightweight library that provides an easy way to interact with HAL hypermedia APIs.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
