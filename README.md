@@ -65,12 +65,13 @@ foreach (var order in ordersResource.Orders)
 
 
 ## Supported Platforms
-
-* .NET 4.6.1 (Desktop / Server)
-* Windows 8 / 8.1 Store Apps
-* Windows Phone 8 / 8.1
-* Xamarin.iOS / Xamarin.Android / Xamarin.Mac
-* Mono 3.x
+* .NET Core 2.0
+* .NET Framework 4.6.1
+* Mono 5.4
+* Xamarin.iOS 10.14
+* Xamarin.Mac 3.8
+* Xamarin.Android 7.5
+* Universal Windows Platform vNext
 
 
 ## How to contribute
