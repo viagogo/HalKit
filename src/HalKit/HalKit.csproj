@@ -6,7 +6,7 @@
     <PackageProjectUrl>https://github.com/viagogo/HalKit</PackageProjectUrl>
     <RepositoryUrl></RepositoryUrl>
     <Company>viagogo</Company>
-    <Copyright>Copyright viagogo 2018</Copyright>
+    <Copyright>Copyright viagogo 2021</Copyright>
     <Authors>viagogo</Authors>
     <License>https://raw.githubusercontent.com/viagogo/HalKit/master/LICENSE.txt</License>
     <Description>HalKit is a lightweight library that provides an easy way to interact with HAL hypermedia APIs.</Description>
