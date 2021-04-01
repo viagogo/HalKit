@@ -270,7 +270,7 @@ namespace HalKit
         {
             return SendRequestAndGetBodyAsync<T>(
                 link,
-                new HttpMethod("Patch"),
+                new HttpMethod("PATCH"),
                 body,
                 parameters,
                 headers,

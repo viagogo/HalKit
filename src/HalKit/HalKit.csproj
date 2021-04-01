@@ -6,9 +6,9 @@
     <PackageProjectUrl>https://github.com/viagogo/HalKit</PackageProjectUrl>
     <RepositoryUrl></RepositoryUrl>
     <Company>viagogo</Company>
-    <Copyright>Copyright viagogo 2018</Copyright>
+    <Copyright>Copyright viagogo 2021</Copyright>
     <Authors>viagogo</Authors>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/viagogo/HalKit/master/LICENSE.txt</PackageLicenseUrl>
+    <License>https://raw.githubusercontent.com/viagogo/HalKit/master/LICENSE.txt</License>
     <Description>HalKit is a lightweight library that provides an easy way to interact with HAL hypermedia APIs.</Description>
   </PropertyGroup>
   <ItemGroup>
@@ -19,5 +19,5 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
-  <Import Project="..\..\version.props" />
+  <Import Project="..\..\Version.props" />
 </Project>
