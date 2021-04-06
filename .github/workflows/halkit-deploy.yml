@@ -15,7 +15,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.x'
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet pack --configuration Release src/HalKit/HalKit.csproj --no-restore
     - name: Create the package
-      run: dotnet pack --configuration Release src/HalKit/HalKit.csproj
+      run: dotnet pack --configuration Release src/HalKit/HalKit.csproj --no-build --no-restore
     - name: Publish the package to nuget.org
       run: dotnet nuget push src/HalKit/bin/Release/*.nupkg
