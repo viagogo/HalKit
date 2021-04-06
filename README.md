@@ -2,10 +2,10 @@
 
 [![NuGet version](https://badge.fury.io/nu/halkit.svg)][nuget]
 [![Downloads](https://img.shields.io/nuget/dt/halkit.svg)][nuget]
-[![Build status](https://ci.appveyor.com/api/projects/status/h9y4iv2ewqama4qw/branch/master?svg=true)][appveyor]
+[![HalKit - CI](https://github.com/viagogo/HalKit/actions/workflows/halkit-ci.yml/badge.svg?branch=master)][ci-build]
 
 [nuget]: http://www.nuget.org/packages/HalKit
-[appveyor]: https://ci.appveyor.com/project/viagogo/halkit/branch/master
+[ci-build]: https://github.com/viagogo/HalKit/actions/workflows/halkit-ci.yml
 
 HalKit is a lightweight library, targeting .NET 4.6.1 and above, that provides an easy way to interact with [HAL][hal] hypermedia APIs.
 
@@ -65,7 +65,7 @@ foreach (var order in ordersResource.Orders)
 
 
 ## Supported Platforms
-* .NET Core 2.0
+* .NET Core 3.1
 * .NET Framework 4.6.1
 * Mono 5.4
 * Xamarin.iOS 10.14
