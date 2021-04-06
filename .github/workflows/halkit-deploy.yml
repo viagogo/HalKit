@@ -8,6 +8,8 @@ jobs:
   build:
 
     runs-on: windows-latest
+    env:
+      NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_TOKEN}}
 
     steps:
     - uses: actions/checkout@v2
