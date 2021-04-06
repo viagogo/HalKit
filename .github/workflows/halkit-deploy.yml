@@ -1,0 +1,21 @@
+name: HalKit - Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
+    - name: Create the package
+      run: dotnet pack --configuration Release src/HalKit/HalKit.csproj
+    - name: Publish the package to nuget.org
+      run: dotnet nuget push src/HalKit/bin/Release/*.nupkg
