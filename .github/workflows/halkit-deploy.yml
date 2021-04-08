@@ -5,7 +5,7 @@ on: workflow_dispatch
 jobs:
   deploy:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +17,10 @@ jobs:
       run: dotnet restore
     - name: Create the package
       run: dotnet build --configuration Release src/HalKit/HalKit.csproj --no-restore
-    - name: Publish the package to nuget.org
-      run: dotnet nuget push src/HalKit/bin/Release/HalKit.nupkg -k $NUGET_API_TOKEN
-      env:
-        NUGET_API_TOKEN: ${{secrets.NUGET_API_TOKEN}}
+    - name: Publish the package
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: src/HalKit/HalKit.csproj
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
