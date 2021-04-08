@@ -18,6 +18,6 @@ jobs:
     - name: Create the package
       run: dotnet build --configuration Release src/HalKit/HalKit.csproj --no-restore
     - name: Publish the package to nuget.org
-      run: dotnet nuget push -k "$env:NUGET_API_TOKEN" src/HalKit/bin/Release/*.nupkg
+      run: dotnet nuget push -k "$env:NUGET_API_TOKEN" src/HalKit/bin/Release/HalKit.nupkg
       env:
         NUGET_API_TOKEN: ${{ secrets.NUGET_API_TOKEN }}
