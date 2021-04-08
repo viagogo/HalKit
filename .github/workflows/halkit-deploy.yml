@@ -24,7 +24,7 @@ jobs:
         VERSION_FILE_PATH: Version.props
         VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
         TAG_COMMIT: true
-        TAG_FORMAT: v*-nuget
+        TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
         INCLUDE_SYMBOLS: true
