@@ -18,7 +18,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet pack --configuration Release src/HalKit/HalKit.csproj --no-restore
+      run: dotnet build --configuration Release src/HalKit/HalKit.csproj --no-restore
     - name: Create the package
       run: dotnet pack --configuration Release src/HalKit/HalKit.csproj --no-build --no-restore
     - name: Publish the package to nuget.org
