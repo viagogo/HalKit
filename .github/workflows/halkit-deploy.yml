@@ -6,8 +6,6 @@ jobs:
   deploy:
 
     runs-on: windows-latest
-    env:
-      NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_TOKEN}}
 
     steps:
     - uses: actions/checkout@v2
@@ -22,4 +20,4 @@ jobs:
     - name: Publish the package to nuget.org
       run: dotnet nuget push -k "$env:NUGET_API_TOKEN" src/HalKit/bin/Release/*.nupkg
       env:
-        NUGET_API_TOKEN: ${{secrets.NUGET_API_TOKEN}}
+        NUGET_API_TOKEN: ${{ secrets.NUGET_API_TOKEN }}
