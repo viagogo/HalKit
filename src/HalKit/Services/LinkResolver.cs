@@ -38,7 +38,7 @@ namespace HalKit.Services
 
             var templateParameters = parameters.ToDictionary(kv => kv.Key, kv => (object) kv.Value);
             var resolvedUrl = new UriTemplate(link.HRef).AddParameters(templateParameters).Resolve();
-            return new Uri(resolvedUrl, UriKind.RelativeOrAbsolute);
+            return new Uri(resolvedUrl);
         }
 
         private Uri AppendParametersAsQueryParams(
