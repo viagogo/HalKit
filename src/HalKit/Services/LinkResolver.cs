@@ -9,6 +9,19 @@ namespace HalKit.Services
 {
     public class LinkResolver : ILinkResolver
     {
+        public Uri ResolveLink(Uri rootEndpoint, Link link, IDictionary<string, string> parameters)
+        {
+            Requires.ArgumentNotNull(link, nameof(link));
+
+            if (!link.HRef.Contains(rootEndpoint.AbsoluteUri))
+            {
+                // Make new href from relative path (using absolute path as base)
+                link.HRef = rootEndpoint + link.HRef.Replace(rootEndpoint.AbsolutePath, "");
+            }
+
+            return ResolveLink(link, parameters);
+        }
+
         public Uri ResolveLink(Link link, IDictionary<string, string> parameters)
         {
             Requires.ArgumentNotNull(link, nameof(link));
@@ -20,19 +33,19 @@ namespace HalKit.Services
 
             if (!link.IsTemplated)
             {
-                return AppendParametersAsQueryParams(link, parameters);
+                return AppendParametersAsQueryParams(link.HRef, parameters);
             }
 
             var templateParameters = parameters.ToDictionary(kv => kv.Key, kv => (object) kv.Value);
             var resolvedUrl = new UriTemplate(link.HRef).AddParameters(templateParameters).Resolve();
-            return new Uri(resolvedUrl);
+            return new Uri(resolvedUrl, UriKind.RelativeOrAbsolute);
         }
 
         private Uri AppendParametersAsQueryParams(
-            Link link,
+            string href,
             IEnumerable<KeyValuePair<string, string>> parameters)
         {
-            var uriBuilder = new UriBuilder(link.HRef);
+            var uriBuilder = new UriBuilder(href);
             var existingQueryParameters = uriBuilder.Query.Replace("?", "");
             if (!string.IsNullOrEmpty(existingQueryParameters) && !existingQueryParameters.EndsWith("&"))
             {

@@ -18,5 +18,10 @@ namespace HalKit
         /// </summary>
         /// <remarks>See http://blog.stephencleary.com/2012/02/async-and-await.html#avoiding-context.</remarks>
         bool CaptureSynchronizationContext { get; set; }
+
+        /// <summary>
+        /// Set whether relative links should be constructed from RootEndpoint
+        /// </summary>
+        bool AllowRelativeLinks { get; set; }
     }
 }
