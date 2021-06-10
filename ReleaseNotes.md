@@ -1,3 +1,6 @@
+### New in 1.0.3 (Released _)
+* Allow relative link uri
+
 ### New in 1.0 (Released 05/09/2018)
 * Upgrade packages to netstandard
 
