@@ -362,8 +362,13 @@ namespace HalKit
                 headers.Add("Accept", new[] { HalJsonMediaType });
             }
 
+            
+            var uri = Configuration.AllowRelativeLinks
+                ? _linkResolver.ResolveLink(Configuration.RootEndpoint, link, parameters)
+                : _linkResolver.ResolveLink(link, parameters);
+
             return await HttpConnection.SendRequestAsync<T>(
-                        _linkResolver.ResolveLink(link, parameters),
+                        uri,
                         method,
                         body,
                         headers,

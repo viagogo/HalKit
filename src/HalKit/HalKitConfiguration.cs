@@ -19,5 +19,7 @@ namespace HalKit
         public Uri RootEndpoint { get; set; }
 
         public bool CaptureSynchronizationContext { get; set; }
+
+        public bool AllowRelativeLinks { get; set; }
     }
 }
