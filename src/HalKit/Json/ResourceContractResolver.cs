@@ -104,7 +104,6 @@ namespace HalKit.Json
             {
                 PropertyName = name,
                 PropertyType = typeof(Dictionary<string, object>),
-                DeclaringType = type,
                 ValueProvider = new ReservedHalPropertyValueProvider(_settings, propertyMap),
                 NullValueHandling = NullValueHandling.Ignore,
                 Readable = propertyMap.Values.Any(p => p.Readable),
