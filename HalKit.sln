@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{EC8D73FD-F
 		Version.props = Version.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalKit.Backend", "HalKit.Backend\HalKit.Backend.csproj", "{F018259F-3574-4675-A78C-5D3165039522}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56D3F770-FD3A-4ADF-A4A0-A5104F5A0012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F018259F-3574-4675-A78C-5D3165039522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F018259F-3574-4675-A78C-5D3165039522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F018259F-3574-4675-A78C-5D3165039522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F018259F-3574-4675-A78C-5D3165039522}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
