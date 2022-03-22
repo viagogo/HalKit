@@ -1,3 +1,6 @@
+### New in 1.0.3 (Released 30/11/2021)
+* Remove DeclaringType from reserved HAL JSON properties
+
 ### New in 1.0 (Released 05/09/2018)
 * Upgrade packages to netstandard
 

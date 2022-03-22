@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using HalKit.Json;
 using HalKit.Models.Response;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Linq;
 using Newtonsoft.Json.Serialization;
 
-namespace HalKit.Json
+namespace HalKit.Backend.Json
 {
     /// <summary>
     /// Resolves a <see cref="JsonContract"/> for a given <see cref="Resource"/>.
+    /// Generates proper type for the reserved JSON properties of "_links" and "_embedded"
+    /// through reflection so that Swashbuckle.AspNetCore or other tools can properly work out the schema
     /// </summary>
-    public class ResourceContractResolver : DefaultContractResolver
+    public class TypedResourceContractResolver : DefaultContractResolver
     {
         private static readonly Dictionary<Type, IList<JsonProperty>> ContractPropertiesByType
             = new Dictionary<Type, IList<JsonProperty>>();
@@ -20,10 +23,10 @@ namespace HalKit.Json
         private readonly JsonSerializerSettings _settings;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceContractResolver"/>
+        /// Initializes a new instance of the <see cref="TypedResourceContractResolver"/>
         /// class.
         /// </summary>
-        public ResourceContractResolver(JsonSerializerSettings settings)
+        public TypedResourceContractResolver(JsonSerializerSettings settings)
         {
             _settings = settings;
         }
@@ -103,7 +106,7 @@ namespace HalKit.Json
             return new JsonProperty
             {
                 PropertyName = name,
-                PropertyType = typeof(Dictionary<string, object>),
+                PropertyType = HalKitTypeBuilder.CompileResultType($"{type.Name}{name}", propertyMap),
                 ValueProvider = new ReservedHalPropertyValueProvider(_settings, propertyMap),
                 NullValueHandling = NullValueHandling.Ignore,
                 Readable = propertyMap.Values.Any(p => p.Readable),
@@ -114,7 +117,7 @@ namespace HalKit.Json
                 Order = int.MaxValue,
             };
         }
-
+        
         private class ReservedHalPropertyValueProvider : IValueProvider
         {
             private readonly JsonSerializerSettings _settings;
