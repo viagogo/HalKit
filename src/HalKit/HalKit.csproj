@@ -12,7 +12,7 @@
     <Description>HalKit is a lightweight library that provides an easy way to interact with HAL hypermedia APIs.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Tavis.UriTemplates" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
